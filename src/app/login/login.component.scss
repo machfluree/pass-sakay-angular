@@ -1,0 +1,27 @@
+.form-header {
+  margin-bottom: 20px;
+  padding: 0 100px 0 100px;
+  h4 {
+    font-weight: 600;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.form-body {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0 100px 0 100px;
+
+  .form-input,
+  button {
+    width: 100%;
+  }
+}
+
+.form-footer {
+    margin-top: 24px;
+}
