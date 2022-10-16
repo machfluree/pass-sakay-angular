@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  api_base_url: 'http://localhost:4300/pass-sakay-v1/api/',
+  STORAGE_KEY: 'eYrt24weHy4S4Jb34asdY63NE23s-d',
+  LOCAL_STORAGE_AUTH_KEY: 'eYrt24weHy4S4Jb34asdY63NE23s-d'
 };
 
 /*

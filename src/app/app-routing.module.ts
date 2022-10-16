@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: 'login',
     loadChildren: () =>
@@ -22,6 +23,12 @@ const routes: Routes = [
     loadChildren: () =>
       import('./bus-driver/bus-driver.module').then((m) => m.BusDriverModule),
   },
+  { path: 'qr-scanner', loadChildren: () => import('./bus-driver/qr-scanner/qr-scanner.module').then(m => m.QrScannerModule) },
+  // {
+  //   path: 'qrscanner',
+  //   loadChildren: () =>
+  //     import('./qrscanner/qrscanner.module').then((m) => m.QrscannerModule),
+  // },
 ];
 
 @NgModule({

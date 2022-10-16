@@ -44,6 +44,7 @@ body { margin: 0; }
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   height: 100%;
 
@@ -85,5 +86,9 @@ body { margin: 0; }
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+  }
+
+  .hidden {
+    display: none;
   }
 }

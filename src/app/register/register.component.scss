@@ -8,10 +8,6 @@
   }
 }
 
-.hidden {
-  display: none;
-}
-
 .qr-body {
   width: auto;
   height: auto;
@@ -20,10 +16,21 @@
   align-items: center;
   justify-content: center;
   padding: 0 100px 0 100px;
+  text-align: center;
 
   h4 {
     margin: 0;
-    padding: 0;
+    padding: 16px 0 0 0;
+  }
+
+  .qr-container {
+    padding: 4px;
+    border: 2px solid #000;
+    border-radius: 8px;
+  }
+
+  button {
+    margin: 16px 0 16px 0;
   }
 }
 
