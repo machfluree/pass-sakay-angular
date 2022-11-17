@@ -1,1 +1,35 @@
-<p>bus-driver works!</p>
+<!-- Header -->
+<!-- quick links (Help, FAQ, Profile -> My Profile, Logout) -->
+<!-- End of Header -->
+
+<!-- Sidenav -->
+<!-- links -->
+<!-- bottom text -->
+<!-- End of Sidenav -->
+
+<!-- Main -->
+<!-- <div class="bd-wrapper">
+    <div class="bd-container">
+        <p>bus-driver works!</p>
+        <router-outlet></router-outlet>
+    </div>
+</div> -->
+<!-- End of Main -->
+
+<!-- Header -->
+<app-header (toggleSideNavEvent)="sideNavToggler()"></app-header>
+
+<mat-sidenav-container hasBackdrop="false">
+    <mat-sidenav id="appSidenav" mode="side" [opened]="sideNavOpened" color="primary">
+        <app-sidebar></app-sidebar>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- footer -->
+<app-footer></app-footer>
+<!-- define your layout here -->
+<!-- import header, footer, sidebar components/modules -->

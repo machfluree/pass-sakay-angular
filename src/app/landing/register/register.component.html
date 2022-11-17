@@ -1,7 +1,10 @@
 <div
   class="app-logo-container"
   [ngClass]="
-    category == 'pass-registration-complete' ? 'justify-content-center' : ''
+    category == 'pass-registration-complete' ||
+    category == 'bus-driver-registration-complete'
+      ? 'justify-content-center'
+      : ''
   "
 >
   <p class="app-text-logo">
@@ -14,7 +17,10 @@
   <h4 *ngIf="category == 'passenger'">Register as Passenger</h4>
   <h4 *ngIf="category == 'bus-driver'">Register as Bus Driver</h4>
   <h4
-    *ngIf="category == 'pass-registration-complete'"
+    *ngIf="
+      category == 'pass-registration-complete' ||
+      category == 'bus-driver-registration-complete'
+    "
     class="justify-content-center"
   >
     Registration Complete!
@@ -38,7 +44,7 @@
     Bus Driver
   </button>
   <div class="form-footer">
-    <p>Already have an account? <a href="login">Login Now</a></p>
+    <p>Already have an account? <a href="welcome/login">Login Now</a></p>
   </div>
 </div>
 
@@ -87,7 +93,6 @@
       </mat-form-field>
       <div class="form-wizard-controls">
         <button
-          type="submit"
           mat-stroked-button
           color="primary"
           (click)="handleChangeCategory('')"
@@ -98,7 +103,7 @@
           mat-flat-button
           color="primary"
           (click)="handleNextRegistrationPassenger('passenger-contact')"
-          [disabled]="disableBasicInfoNext ? disableBasicInfoNext : false"
+          [disabled]="disableBasicInfoNext"
         >
           Next
         </button>
@@ -145,7 +150,6 @@
         <button
           mat-flat-button
           color="primary"
-          type="submit"
           (click)="handleSubmitPassengerForm()"
           [disabled]="disableContactInfoNext ? disableContactInfoNext : false"
         >
@@ -162,15 +166,26 @@
     <div [ngClass]="busdriverStepControls == '' ? '' : 'hidden'">
       <mat-form-field class="form-input">
         <mat-label>Bus Name</mat-label>
-        <input matInput type="text" value="" />
+        <input matInput formControlName="busName" type="text" value="" />
+        <mat-error *ngIf="handleBusDriverInputErrors('busName', 'required')">
+          This field is required.
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="form-input">
         <mat-label>Bus Number</mat-label>
-        <input matInput type="text" value="" />
+        <input matInput formControlName="busNumber" type="text" value="" />
+        <mat-error *ngIf="handleBusDriverInputErrors('busNumber', 'required')">
+          This field is required.
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="form-input">
         <mat-label>Province</mat-label>
-        <input matInput type="text" value="" />
+        <input matInput formControlName="busProvince" type="text" value="" />
+        <mat-error
+          *ngIf="handleBusDriverInputErrors('busProvince', 'required')"
+        >
+          This field is required.
+        </mat-error>
       </mat-form-field>
       <div class="form-wizard-controls">
         <button
@@ -184,6 +199,7 @@
           mat-flat-button
           color="primary"
           (click)="handleNextRegistrationBusDriver('bus-driver-incharge')"
+          [disabled]="disableBusBasicInfoNext ? disableBusBasicInfoNext : false"
         >
           Next
         </button>
@@ -194,15 +210,49 @@
     >
       <mat-form-field class="form-input">
         <mat-label>In-charge of Account</mat-label>
-        <input matInput type="text" value="" />
+        <input
+          matInput
+          formControlName="operatorFullName"
+          type="text"
+          value=""
+        />
+        <mat-error
+          *ngIf="handleBusDriverInputErrors('operatorFullName', 'required')"
+        >
+          This field is required.
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="form-input">
         <mat-label>Position</mat-label>
-        <input matInput type="text" value="" />
+        <input
+          matInput
+          formControlName="operatorPosition"
+          type="text"
+          value=""
+        />
+        <mat-error
+          *ngIf="handleBusDriverInputErrors('operatorPosition', 'required')"
+        >
+          This field is required.
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="form-input">
         <mat-label>Mobile Number</mat-label>
-        <input matInput type="text" value="" />
+        <input
+          matInput
+          formControlName="operatorPhoneNumber"
+          type="text"
+          value=""
+        />
+        <mat-error
+          *ngIf="handleBusDriverInputErrors('operatorPhoneNumber', 'required')"
+        >
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-input">
+        <mat-label>Email Address</mat-label>
+        <input matInput formControlName="operatorEmail" type="email" value="" />
       </mat-form-field>
       <div class="form-wizard-controls">
         <button
@@ -216,6 +266,9 @@
           mat-flat-button
           color="primary"
           (click)="handleNextRegistrationBusDriver('bus-driver-account')"
+          [disabled]="
+            disableBusOperatorInfoNext ? disableBusOperatorInfoNext : false
+          "
         >
           Next
         </button>
@@ -225,16 +278,32 @@
       [ngClass]="busdriverStepControls == 'bus-driver-account' ? '' : 'hidden'"
     >
       <mat-form-field class="form-input">
-        <mat-label>Email Address</mat-label>
-        <input matInput type="text" value="" />
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" type="text" value="" />
+        <mat-error *ngIf="handleBusDriverInputErrors('username', 'required')">
+          This field is required.
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="form-input">
         <mat-label>Password</mat-label>
-        <input matInput type="password" value="" />
+        <input matInput formControlName="password" type="password" value="" />
+        <mat-error *ngIf="handleBusDriverInputErrors('password', 'required')">
+          This field is required.
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="form-input">
         <mat-label>Confirm Password</mat-label>
-        <input matInput type="password" value="" />
+        <input
+          matInput
+          formControlName="confirmPassword"
+          type="password"
+          value=""
+        />
+        <mat-error
+          *ngIf="handleBusDriverInputErrors('confirmPassword', 'required')"
+        >
+          This field is required.
+        </mat-error>
       </mat-form-field>
       <div class="form-wizard-controls">
         <button
@@ -247,7 +316,10 @@
         <button
           mat-flat-button
           color="primary"
-          (click)="handleNextRegistrationBusDriver('bus-driver-account')"
+          (click)="handleSubmitRegistrationBusDriver()"
+          [disabled]="
+            disableBusOperatorInfoNext ? disableBusOperatorInfoNext : false
+          "
         >
           Submit
         </button>
@@ -263,14 +335,34 @@
     [width]="200"
     [errorCorrectionLevel]="'M'"
   ></qrcode>
-  <h4><strong>{{qrPassengerData.fullname}}</strong></h4>
-  <p> {{qrPassengerData.currentAddress}} </p>
+  <h4>
+    <strong>{{ qrPassengerData.fullname }}</strong>
+  </h4>
+  <p>{{ qrPassengerData.currentAddress }}</p>
   <button
-    (click)="handleChangeCategory('bus-driver')"
+    (click)="handleDownloadQRCode()"
     mat-flat-button
     color="primary"
   >
     Download QR Code as Image
   </button>
   <a href="login">Back to Login</a>
+</div>
+
+<!-- <div class="bd-success"> -->
+<div class="bd-success" *ngIf="category == 'bus-driver-registration-complete'">
+  <div class="icon-container">
+    <mat-icon>check_circle_outline</mat-icon>
+  </div>
+  <p>
+    Note: Kindly wait for the verification of your account in order for you to
+    login.
+  </p>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="handleChangeCategory('')"
+  >
+    Done
+  </button>
 </div>

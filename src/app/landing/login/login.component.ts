@@ -66,9 +66,14 @@ export class LoginComponent implements OnInit {
   redirectLoggedInUser = (userData: any) => {
     console.log('redirecting', userData)
     switch (userData.userRole) {
-      case 'bus driver':
+      case 'bus-driver':
         this.route.navigate(['bus-driver']).then(() => {
           this.openSnackBar("Logged in as Bus Driver", "OK");
+        });
+        break;
+      case 'passenger':
+        this.route.navigate(['/passenger/dashboard']).then(() => {
+          this.openSnackBar("Logged in as Passenger", "OK");
         });
         break;
       case 'admin':
@@ -77,6 +82,15 @@ export class LoginComponent implements OnInit {
         });
         break;
       default:
+        if (this.loginFormGroup && this.loginFormGroup.controls) {
+          Object.keys(this.loginFormGroup.controls).forEach(key => {
+            const control = this.loginFormGroup.get(key);
+            if (control) control.setErrors(null);
+          });
+        }
+        this.loginFormGroup.reset();
+        this.localStorageService.removeAll();
+        this.openSnackBar("Unknown user role.", "OK");
         break;
     }
   }

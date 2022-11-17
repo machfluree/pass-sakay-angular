@@ -34,6 +34,37 @@
   }
 }
 
+.bd-success {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 100px 0 100px;
+  text-align: center;
+
+  .icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: auto;
+    height: auto;
+
+    mat-icon {
+      font-size: 64pt;
+      width: 64pt;
+      height: 64pt;
+      color: #428a82;
+    }
+  }
+
+  p {
+    max-width: 300px;
+  }
+}
+
 .form-body {
   width: auto;
   height: auto;

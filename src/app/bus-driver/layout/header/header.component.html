@@ -1,0 +1,49 @@
+<header id="app-header">
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="toggleSideNav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span id="app-name">Pass<span id="app-name-emp">Sakay</span></span>
+
+    <!-- TODO add a search field beside the app logo or center of the toolbar -->
+    <!-- <input id="searchInput" type="search" placeholder="Search" /> -->
+
+    <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+      <ul
+        fxLayout="row"
+        fxLayoutGap="20px"
+        fxLayoutAlign="flex-center flex-start"
+      >
+        <li>
+          <button mat-icon-button>
+            <mat-icon>settings</mat-icon>
+          </button>
+        </li>
+        <li>
+          <button mat-icon-button>
+            <mat-icon>help_outline</mat-icon>
+          </button>
+        </li>
+        <li>
+          <a mat-icon-button  [matMenuTriggerFor]="userMenu">
+            <mat-icon>person_outline</mat-icon>
+            <mat-menu #userMenu="matMenu">
+              <button mat-menu-item>
+                <mat-icon>person_outline</mat-icon> My Profile
+              </button>
+              <button mat-menu-item>
+                <mat-icon>exit_to_app</mat-icon> Log out
+              </button>
+
+            </mat-menu>
+          </a>
+        </li>
+        <!-- <li>
+          <button mat-button>
+            <mat-icon>person_outline</mat-icon> Username
+          </button>
+        </li> -->
+      </ul>
+    </div>
+  </mat-toolbar>
+</header>
