@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
     private passSakayAPIService: PassSakayCollectionService
   ) {}
 
-  public category: string = 'pass-registration-complete';
+  public category: string = '';
   public passengerStepControls: string = '';
   public busdriverStepControls: string = '';
   public qrPassengerData: any;
