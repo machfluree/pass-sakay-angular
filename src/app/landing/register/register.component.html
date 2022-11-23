@@ -3,7 +3,7 @@
   [ngClass]="
     category == 'pass-registration-complete' ||
     category == 'bus-driver-registration-complete'
-      ? 'justify-content-center'
+      ? 'flex justify-content-center'
       : ''
   "
 >
@@ -21,7 +21,7 @@
       category == 'pass-registration-complete' ||
       category == 'bus-driver-registration-complete'
     "
-    class="justify-content-center"
+    class="flex justify-content-center"
   >
     Registration Complete!
   </h4>
@@ -143,6 +143,50 @@
         <button
           mat-stroked-button
           color="primary"
+          (click)="handleNextRegistrationPassenger('passenger-contact')"
+        >
+          Back
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="handleNextRegistrationPassenger('passenger-account')"
+          [disabled]="disableBasicInfoNext"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+
+    <!-- passenger account -->
+    <div
+      [ngClass]="passengerStepControls == 'passenger-account' ? '' : 'hidden'"
+    >
+      <mat-form-field class="form-input">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="p_username" type="text" value="" />
+        <mat-error *ngIf="handleInputErrors('p_username', 'required')">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-input">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="p_password" type="password" value="" />
+        <mat-error *ngIf="handleInputErrors('p_password', 'required')">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-input">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput formControlName="p_confirmPassword" type="password" value="" />
+        <mat-error *ngIf="handleInputErrors('p_confirmPassword', 'required')">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+      <div class="form-wizard-controls">
+        <button
+          mat-stroked-button
+          color="primary"
           (click)="handleNextRegistrationPassenger('')"
         >
           Previous
@@ -151,7 +195,7 @@
           mat-flat-button
           color="primary"
           (click)="handleSubmitPassengerForm()"
-          [disabled]="disableContactInfoNext ? disableContactInfoNext : false"
+          [disabled]="disableSuccessRegister ? disableSuccessRegister : false"
         >
           Submit
         </button>
@@ -346,7 +390,7 @@
   >
     Download QR Code as Image
   </button>
-  <a href="login">Back to Login</a>
+  <a href="/welcome/login">Back to Login</a>
 </div>
 
 <!-- <div class="bd-success"> -->

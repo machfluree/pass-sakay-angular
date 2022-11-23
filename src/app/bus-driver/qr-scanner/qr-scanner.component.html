@@ -1,3 +1,28 @@
-<!-- <p>qr-scanner works!</p> -->
-<h2>QR Scanner</h2>
-<zxing-scanner [formats]="allowedFormats"></zxing-scanner>
+<div class="flex flex-col w-100">
+    <div class="titlebar flex flex-row space-between h-align-center p-2">
+        <h2 class="m-0 p-0"><strong>QR Scanner</strong></h2>
+        <div class="actions flex flex-row g-3">
+            <button mat-flat-button color="primary">
+                Manual Entry
+            </button>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="">
+            <zxing-scanner [formats]="allowedFormats" (scanSuccess)="onCodeResult($event)"></zxing-scanner>
+            <strong>{{ qrResultString }}</strong>
+            <!-- <button mat-flat-button color="primary">
+                Start Scanning
+            </button> -->
+        </div>
+        <!-- <div class="instruction-container">
+            <p>In case the scanner is slowing down, manually input the passenger data here. In case the scanner is slowing down, manually input the passenger data here.</p>
+            <div class="scan-time">
+                <mat-radio-group class="flex flex-row g-5" aria-label="Select an option">
+                    <mat-radio-button value="timeIn">Time In</mat-radio-button>
+                    <mat-radio-button value="timeOut">Time Out</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div> -->
+    </div>
+</div>

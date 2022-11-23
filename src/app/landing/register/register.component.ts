@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
     private passSakayAPIService: PassSakayCollectionService
   ) {}
 
-  public category: string = '';
+  public category: string = 'pass-registration-complete';
   public passengerStepControls: string = '';
   public busdriverStepControls: string = '';
   public qrPassengerData: any;
@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit {
   public busDriverFormGroup: FormGroup = new FormGroup({});
   public disableBasicInfoNext: Boolean = true;
   public disableContactInfoNext: Boolean = true;
+  public disableSuccessRegister: Boolean = true;
   public disableBusBasicInfoNext: Boolean = true;
   public disableBusOperatorInfoNext: Boolean = true;
   public disableBusAccountInfoNext: Boolean = true;
@@ -49,6 +50,10 @@ export class RegisterComponent implements OnInit {
       emailAddress: new FormControl(''),
       currentAddress: new FormControl('', Validators.required),
       homeAddress: new FormControl('', Validators.required),
+      // Account Details
+      p_username: new FormControl('', Validators.required),
+      p_password: new FormControl('', Validators.required),
+      p_confirmPassword: new FormControl('', Validators.required),
     });
   };
 
@@ -116,6 +121,9 @@ export class RegisterComponent implements OnInit {
     const emailAddress = this.passengerFormGroup.get('emailAddress');
     const currentAddress = this.passengerFormGroup.get('currentAddress');
     const homeAddress = this.passengerFormGroup.get('homeAddress');
+    // account info
+    const p_username = this.passengerFormGroup.get('p_username');
+    const p_password = this.passengerFormGroup.get('p_password');
 
     // prep request body
     const passengerBody = {
@@ -128,7 +136,11 @@ export class RegisterComponent implements OnInit {
       ActiveEmailAdd: emailAddress && emailAddress.value ? emailAddress.value : "",
       CurrentAddress: currentAddress && currentAddress.value ? currentAddress.value : "",
       HomeAddress: homeAddress && homeAddress.value ? homeAddress.value : "",
+      Username: p_username && p_username.value ? p_username.value : "",
+      Password: p_password && p_password.value ? p_password.value : "",
     }
+
+    console.log("p payload", passengerBody)
 
     // call api service
     this.passSakayAPIService.addPassenger(passengerBody)
@@ -200,28 +212,6 @@ export class RegisterComponent implements OnInit {
       Email: operatorEmail && operatorEmail.value ? operatorEmail.value : "",
     }
     this.saveBusDriver(busBasicInfoBody);
-
-    // TODO: call api service for saving bus account
-    // bus account info request body
-    // const busAccountInfoBody = {
-    //   UserID: this.newBusDriver._id ? this.newBusDriver._id : "",
-    //   Username: username && username.value ? username.value : "",
-    //   Password: password && password.value ? password.value : "",
-    //   UserRole: "bus-driver",
-    //   Email: operatorEmail && operatorEmail.value ? operatorEmail.value : "",
-    // }
-
-    // this.passSakayAPIService.addAccount(busAccountInfoBody)
-    //   .then((response: any) => {
-    //     if (!response) this.snackBarService.open('Registration failed.', 'OK');
-
-    //     this.snackBarService.open('Registered successfully.', 'OK');
-    //     console.log(response);
-    //   })
-    //   .catch(err => {
-    //     console.error(err)
-    //     this.snackBarService.open('Registration failed. Check your network.', 'OK')
-    //   });
   }
 
   handleDownloadQRCode = () => {
@@ -260,7 +250,30 @@ export class RegisterComponent implements OnInit {
       ) {
         this.disableContactInfoNext = false;
       } else {
-        this.disableBusBasicInfoNext = true;
+        this.disableContactInfoNext = true;
+      }
+    }
+
+    if (this.category === 'passenger' && this.passengerStepControls === 'passenger-account') {
+      const p_username = this.passengerFormGroup.get('p_username');
+      const p_password = this.passengerFormGroup.get('p_password');
+      const p_confirmPassword = this.passengerFormGroup.get('p_confirmPassword');
+
+      if (
+        (p_username && p_confirmPassword && p_password) && 
+        ( 
+          (p_username.value !== "" && p_username.value !== null) &&
+          (p_confirmPassword.value !== "" && p_confirmPassword.value !== null) &&
+          (p_password.value !== "" && p_password.value !== null)
+        )
+      ) {
+        if (p_password.value === p_confirmPassword.value) {
+          this.disableSuccessRegister = false;
+        } else {
+          this.disableSuccessRegister = true;
+        }
+      } else {
+        this.disableSuccessRegister = true;
       }
     }
 
@@ -315,7 +328,7 @@ export class RegisterComponent implements OnInit {
           this.disableBusAccountInfoNext = true;
         }
       } else {
-        this.disableBusBasicInfoNext = true;
+        this.disableBusAccountInfoNext = true;
       }
     }
   }

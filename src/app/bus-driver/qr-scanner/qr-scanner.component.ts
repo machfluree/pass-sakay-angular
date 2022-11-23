@@ -9,10 +9,19 @@ import { BarcodeFormat } from '@zxing/library';
 export class QrScannerComponent implements OnInit {
 
   allowedFormats = [ BarcodeFormat.QR_CODE ];
+  qrResultString: string = "";
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  clearResult(): void {
+    this.qrResultString = "";
+  }
+
+  onCodeResult(resultString: string) {
+    this.qrResultString = resultString;
   }
 
 }

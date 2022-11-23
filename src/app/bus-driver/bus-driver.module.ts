@@ -12,6 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -34,6 +36,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatCardModule,
     MatMenuModule,
     MatGridListModule,
+    MatAutocompleteModule,
+    MatRadioModule,
   ]
 })
 export class BusDriverModule { }
