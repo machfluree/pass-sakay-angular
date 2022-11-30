@@ -9,10 +9,14 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class PassSakayCollectionService {
-  private httpClientNoInterceptor: HttpClient;
+  constructor(
+    private httpClientNoInterceptor: HttpClient
+  ) { }
 
-  constructor(private httpBackend: HttpBackend) {
-    this.httpClientNoInterceptor = new HttpClient(httpBackend);
+  private httpHeaders: { [key:string]: string } = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
   }
 
   public addPassenger(body: any): Promise<any> {
@@ -20,21 +24,20 @@ export class PassSakayCollectionService {
       this.apiAddPassenger(body).subscribe((data: Object) => {
         resolve(data);
       }),
-        (err: any): void => {
-          reject(err);
-        };
+      (err: any): void => {
+        reject(err);
+      };
     });
   }
   private apiAddPassenger(body: any): Observable<any> {
-    const headers: HttpHeaders = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-    });
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
     const endpoint = environment.api_base_url + 'passengers';
     return this.httpClientNoInterceptor
       .post(endpoint, body, { headers: headers })
-      .pipe(map((data: Object) => data));
+      .pipe(map((data: Object) => {
+        console.log("uam", data)
+        return data
+      }));
   }
 
   public addBusDriver(body: any): Promise<any> {
@@ -48,11 +51,7 @@ export class PassSakayCollectionService {
     });
   }
   private apiAddBusDriver(body: any): Observable<any> {
-    const headers: HttpHeaders = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-    });
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
     const endpoint = environment.api_base_url + 'bus-drivers';
     return this.httpClientNoInterceptor
       .post(endpoint, body, { headers: headers })
@@ -70,14 +69,28 @@ export class PassSakayCollectionService {
     });
   }
   private apiAddAccount(body: any): Observable<any> {
-    const headers: HttpHeaders = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-    });
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
     const endpoint = environment.api_base_url + 'accounts';
     return this.httpClientNoInterceptor
       .post(endpoint, body, { headers: headers })
+      .pipe(map((data: Object) => data));
+  }
+
+  public getOnePassengerData(id: any): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      this.apiGetOnePassengerData(id).subscribe((data: Object) => {
+        resolve(data);
+      }),
+        (err: any): void => {
+          reject(err);
+        };
+    });
+  }
+  private apiGetOnePassengerData(id: any): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
+    const endpoint = environment.api_base_url + 'passengers/' + id.toString();
+    return this.httpClientNoInterceptor
+      .get(endpoint, { headers: headers })
       .pipe(map((data: Object) => data));
   }
 }

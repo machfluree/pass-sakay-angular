@@ -64,19 +64,18 @@ export class LoginComponent implements OnInit {
   };
 
   redirectLoggedInUser = (userData: any) => {
-    console.log('redirecting', userData)
     switch (userData.userRole) {
-      case 'bus-driver':
-        this.route.navigate(['bus-driver']).then(() => {
+      case environment.USER_ROLE.BusDriver:
+        this.route.navigate(['/bus-driver']).then(() => {
           this.openSnackBar("Logged in as Bus Driver", "OK");
         });
         break;
-      case 'passenger':
-        this.route.navigate(['/passenger/dashboard']).then(() => {
+      case environment.USER_ROLE.Passenger:
+        this.route.navigate(['/passenger']).then(() => {
           this.openSnackBar("Logged in as Passenger", "OK");
         });
         break;
-      case 'admin':
+      case environment.USER_ROLE.Admin:
         this.route.navigate(['/admin/dashboard']).then(() => {
           this.openSnackBar("Logged in as Admin", "OK");
         });

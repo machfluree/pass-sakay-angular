@@ -145,12 +145,17 @@ export class RegisterComponent implements OnInit {
     // call api service
     this.passSakayAPIService.addPassenger(passengerBody)
       .then((response: any) => {
-        if (!response) this.snackBarService.open('Registration failed. Check your network.', 'OK');
+        if (response.error) {
+          this.snackBarService.open(response.error.message, 'Got it');
+        }
         if (response && response.passengerData) {
-          this.generateQRCode(response.passengerData);
+          this.qrPassengerData = response.passengerData;
+          this.handleChangeCategory('pass-registration-complete');
         }
       })
-    this.handleChangeCategory('pass-registration-complete');
+      .catch((err: any) => {
+        console.log("add passenger error", err);
+      });
   };
 
   generateQRCode = (data: any) => {

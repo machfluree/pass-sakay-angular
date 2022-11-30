@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: '/welcome/login', pathMatch: 'full' },
   { path: 'bus-driver', redirectTo: '/bus-driver/dashboard', pathMatch: 'full' },
+  { path: 'passenger', redirectTo: '/passenger/profile', pathMatch: 'full' },
   {
     path: 'passenger',
     loadChildren: () =>

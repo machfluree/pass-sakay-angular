@@ -4,33 +4,35 @@ import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LocalStorageService } from 'src/services/local-storage.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import jwt_decode from "jwt-decode";
 import { Login } from 'src/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private httpClientNoInterceptor: HttpClient;
-  public hasError: Boolean = false;
-
   constructor(
-    private httpBackend: HttpBackend,
+    private httpClientNoInterceptor: HttpClient,
     public localStorageService: LocalStorageService,
     private snackBar: MatSnackBar
-  ) {
-    this.httpClientNoInterceptor = new HttpClient(httpBackend);
-  }
+  ) { }
 
-  public checkAuth(data: any): Boolean {
-    if (this.localStorageService.get(data)) return true;
-    return false;
+  public hasError: Boolean = false;
+  public userData: Object = {};
+
+  public checkAuth(data: any): any {
+    const loginData = this.localStorageService.get(data)
+    return jwt_decode(loginData.accessToken);
   }
 
   public async loginUser(body: any): Promise<any> {
     try {
       return await new Promise<any>((resolve: any, reject: any) => {
-        this.apiLoginUser(body).subscribe((data: Object) => {
-          console.log('1234', data);
+        this.apiLoginUser(body).subscribe((data: any) => {
+          const loginData: any = jwt_decode(data.accessToken);
+          const parsedLoginData = JSON.parse(loginData.data)
+          console.log("auth loginData", parsedLoginData);
+          this.userData = parsedLoginData;
           resolve(data);
         }),
           (error: any) => {
