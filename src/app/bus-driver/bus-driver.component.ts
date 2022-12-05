@@ -24,11 +24,11 @@ export class BusDriverComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if (!this.authService.checkAuth(environment.STORAGE_KEY)) {
-      this.router.navigate(['/welcome/login']).then(() => {
-        this.snackbarService.open('Please login first.', 'OK')
-      });
-    }
+    // if (!this.authService.checkAuth(environment.STORAGE_KEY)) {
+    //   this.router.navigate(['/welcome/login']).then(() => {
+    //     this.snackbarService.open('Please login first.', 'OK')
+    //   });
+    // }
   }
 
   sideNavToggler = () => {

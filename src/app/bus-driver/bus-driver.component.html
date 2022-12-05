@@ -1,17 +1,88 @@
-<!-- Header -->
-<app-header (toggleSideNavEvent)="sideNavToggler()"></app-header>
-
-<mat-sidenav-container hasBackdrop="false">
-    <!-- sidenav -->
-    <mat-sidenav id="appSidenav" mode="side" [opened]="sideNavOpened" color="primary">
-        <app-sidebar></app-sidebar>
-    </mat-sidenav>
-
-    <!-- app content, router outlet container -->
-    <mat-sidenav-content>
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
-</mat-sidenav-container>
-
-<!-- footer -->
-<app-footer></app-footer>
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar-->
+  <div class="border-end bg-white" id="sidebar-wrapper" [ngClass]="sideNavOpened ? 'show' : 'hide'"> 
+    <div class="sidebar-heading border-bottom app-text-logo">
+      <span class="pass">Pass</span><span class="sakay">Sakay</span>
+      <span class="bus-driver">Bus Driver</span>
+    </div>
+    <div class="list-group list-group-flush">
+      <a
+        class="list-group-item list-group-item-action list-group-item-light p-3"
+        href="/bus-driver/dashboard"
+        >Dashboard</a
+      >
+      <a
+        class="list-group-item list-group-item-action list-group-item-light p-3"
+        href="/bus-driver/qr-scanner"
+        >Scan QR</a
+      >
+      <a
+        class="list-group-item list-group-item-action list-group-item-light p-3"
+        href="#!"
+        >Trips</a
+      >
+      <a
+        class="list-group-item list-group-item-action list-group-item-light p-3"
+        href="#!"
+        >Reports</a
+      >
+    </div>
+  </div>
+  <!-- Page content wrapper-->
+  <div id="page-content-wrapper">
+    <!-- Top navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+      <div class="container-fluid">
+        <button
+          class="m-0 p-0"
+          mat-mini-fab
+          color="primary"
+          aria-label="Toggle Sidebar"
+          (click)="sideNavToggler()"
+        >
+          <mat-icon>{{ sideNavOpened ? "arrow_back" : "arrow_forward" }}</mat-icon>
+        </button>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#busDriverNavbar"
+          aria-controls="busDriverNavbar"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="busDriverNavbar">
+          <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                >User</a
+              >
+              <div
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="navbarDropdown"
+              >
+                <a class="dropdown-item" href="/bus-driver/profile">User Profile</a>
+                <a class="dropdown-item" href="/bus-driver/change-password">Change Password</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#!">Logout</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Page content-->
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
