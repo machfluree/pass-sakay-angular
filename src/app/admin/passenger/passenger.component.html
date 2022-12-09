@@ -1,0 +1,47 @@
+<div class="passenger-page container">
+  <div class="row pt-5">
+    <div class="passenger-page-title col col-12">
+      <div class="d-flex flex-row justify-content-between align-items-center">
+        <h1 class="m-0 p-0">Passengers</h1>
+        <button class="m-0 p-0" mat-fab color="warn" aria-label="Edit Profile">
+          <mat-icon>save_alt</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <!-- table -->
+    <div class="table-responsive table-responsive-sm">
+      <table class="table table-hover">
+        <caption>
+          Showing 10 of {{ 45 }} trip records, export to view them all.
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Passenger Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0001</td>
+            <td>James Maxwell</td>
+            <td>221B Baker Street</td>
+            <td>0912 123 1234</td>
+            <td>
+              <span class="badge text-success">Active</span>
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary btn-sm">View</button>
+              <button type="button" class="btn btn-secondary btn-sm">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

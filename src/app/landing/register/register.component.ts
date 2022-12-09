@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit {
   public passengerStepControls: string = '';
   public busdriverStepControls: string = '';
   public qrPassengerData: any;
+  public qrData: string = "";
   public passengerFormGroup: FormGroup = new FormGroup({});
   public busDriverFormGroup: FormGroup = new FormGroup({});
   public disableBasicInfoNext: Boolean = true;
@@ -149,7 +150,7 @@ export class RegisterComponent implements OnInit {
           this.snackBarService.open(response.error.message, 'Got it');
         }
         if (response && response.passengerData) {
-          this.qrPassengerData = response.passengerData;
+          this.generateQRCode(response.passengerData);
           this.handleChangeCategory('pass-registration-complete');
         }
       })
@@ -161,6 +162,9 @@ export class RegisterComponent implements OnInit {
   generateQRCode = (data: any) => {
     console.log('generating qr code', data);
     this.qrPassengerData = data;
+    this.qrData = JSON.stringify({
+      passenger: data.secret_id
+    })
   };
 
   handleInputErrors = (controlName: string, errName: string) => {

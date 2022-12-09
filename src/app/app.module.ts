@@ -11,6 +11,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LandingModule } from './landing/landing.module';
 import { BusDriverModule } from './bus-driver/bus-driver.module';
 import { PassengerModule } from './passenger/passenger.module';
+import { AdminModule } from './admin/admin.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatSnackBarModule,
     LandingModule,
     BusDriverModule,
-    PassengerModule
+    PassengerModule,
+    AdminModule
   ],
   providers: [
     {

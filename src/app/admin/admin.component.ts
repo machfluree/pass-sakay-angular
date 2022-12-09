@@ -7,11 +7,11 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-bus-driver',
-  templateUrl: './bus-driver.component.html',
-  styleUrls: ['./bus-driver.component.scss']
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.scss']
 })
-export class BusDriverComponent implements OnInit {
+export class AdminComponent implements OnInit {
 
   sideNavOpened: boolean = true;
   userData: any = {};

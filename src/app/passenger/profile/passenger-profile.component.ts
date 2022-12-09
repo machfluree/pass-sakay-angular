@@ -79,7 +79,9 @@ export class PassengerProfileComponent implements OnInit {
           );
         }
         if (!response.error) {
-          this.passengerQRData = response._id;
+          this.passengerQRData = JSON.stringify({
+            passenger: response._id
+          });
           this.setFormValues(response);
           this.passengerData = response;
         }
@@ -118,7 +120,7 @@ export class PassengerProfileComponent implements OnInit {
     homeAddress?.setValue(data.homeAddress);
   };
 
-  search: OperatorFunction<string, readonly string[]> = (
+  autoCompleteGender: OperatorFunction<string, readonly string[]> = (
     text$: Observable<string>
   ) => {
     const debouncedText$ = text$.pipe(

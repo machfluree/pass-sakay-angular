@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BusDriverRoutingModule } from './bus-driver-routing.module';
+import { AdminRoutingModule } from './admin-routing.module';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LayoutModule } from './layout/layout.module';
-import { BusDriverComponent } from './bus-driver.component';
+import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { QrScannerComponent } from './qr-scanner/qr-scanner.component';
+import { PassengerComponent } from './passenger/passenger.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -23,15 +23,15 @@ import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
-    BusDriverComponent,
-    QrScannerComponent,
+    AdminComponent,
     DashboardComponent,
+    PassengerComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    BusDriverRoutingModule,
+    AdminRoutingModule,
     ZXingScannerModule,
     LayoutModule,
     MatSidenavModule,
@@ -48,4 +48,4 @@ import { MatSelectModule } from '@angular/material/select';
     NgbModule,
   ]
 })
-export class BusDriverModule { }
+export class AdminModule { }

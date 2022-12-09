@@ -36,7 +36,7 @@ $theme-colors: (
       color: #287cb1;
     }
 
-    .gender-radio {
+    .custom-radio {
         .form-check {
             padding-top: 6px;
         }
@@ -52,7 +52,7 @@ $theme-colors: (
     }
 
     input, select {
-        font-size: 11pt;
+      font-size: 11pt;
       @include placeholder {
         letter-spacing: -0.05rem !important;
         font-size: 11pt;

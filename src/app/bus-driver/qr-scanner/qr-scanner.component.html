@@ -1,28 +1,179 @@
-<div class="flex flex-col w-100">
-    <div class="titlebar flex flex-row space-between h-align-center p-2">
-        <h2 class="m-0 p-0"><strong>QR Scanner</strong></h2>
-        <div class="actions flex flex-row g-3">
-            <button mat-flat-button color="primary">
-                Manual Entry
-            </button>
-        </div>
+<div class="passenger-page container">
+  <div class="row pt-4">
+    <div class="passenger-page-title col col-12">
+      <div class="d-flex flex-row justify-content-between align-items-center">
+        <!-- <h1 class="m-0 p-0">Dashboard</h1> -->
+      </div>
     </div>
-    <div class="d-flex justify-content-center">
-        <div class="">
-            <zxing-scanner [formats]="allowedFormats" (scanSuccess)="onCodeResult($event)"></zxing-scanner>
-            <strong>{{ qrResultString }}</strong>
-            <!-- <button mat-flat-button color="primary">
-                Start Scanning
-            </button> -->
+  </div>
+  <div class="row">
+    <div class="col col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 pb-3" [formGroup]="tripDetailsFormGroup">
+      <div class="row">
+        <div class="col col-12 pb-3">
+          <div class="form-group-name">START QR SCANNING SESSION</div>
         </div>
-        <!-- <div class="instruction-container">
-            <p>In case the scanner is slowing down, manually input the passenger data here. In case the scanner is slowing down, manually input the passenger data here.</p>
-            <div class="scan-time">
-                <mat-radio-group class="flex flex-row g-5" aria-label="Select an option">
-                    <mat-radio-button value="timeIn">Time In</mat-radio-button>
-                    <mat-radio-button value="timeOut">Time Out</mat-radio-button>
-                </mat-radio-group>
+        <div class="col col-12 pb-3">
+          <div class="form-group">
+            <label>Select trip action</label>
+            <div class="custom-radio d-flex flex-row gap-3 align-items-center">
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  formControlName="tripAction"
+                  type="radio"
+                  name="tripAction"
+                  id="onboarding"
+                  value="On-boarding"
+                />
+                <label class="form-check-label" for="onboarding"
+                  >On-boarding</label
+                >
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  formControlName="tripAction"
+                  type="radio"
+                  name="tripAction"
+                  id="offboarding"
+                  value="Off-boarding"
+                />
+                <label class="form-check-label" for="offboarding"
+                  >Off-boarding</label
+                >
+              </div>
             </div>
-        </div> -->
+          </div>
+        </div>
+        <div class="col col-12 pb-3">
+          <div class="form-group">
+            <label>Date of Trip</label>
+            <div class="date-picker">
+              <span (click)="datepicker.toggle()"></span>
+              <input
+                class="form-control"
+                type="text"
+                placeholder="-- Choose a date --"
+                name="tripDate"
+                formControlName="tripDate"
+                ngbDatepicker
+                #datepicker="ngbDatepicker"
+                autocomplete="false"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col col-12">
+          <div class="row">
+            <div class="col col-12 col-sm-12 col-md-6 col-lg-6 col-xl 6 pb-3">
+              <div class="form-group">
+                <label>Start Time</label>
+                <input
+                  type="time"
+                  class="form-control"
+                  formControlName="tripStartTime"
+                  aria-describedby="middlenameHelp"
+                  placeholder="Enter Start Time"
+                />
+              </div>
+            </div>
+            <div class="col col-12 col-sm-12 col-md-6 col-lg-6 col-xl 6 pb-3">
+              <div class="form-group">
+                <label>End Time</label>
+                <input
+                  type="time"
+                  class="form-control"
+                  formControlName="tripEndTime"
+                  aria-describedby="tripEndTimeHelp"
+                  placeholder="Enter End Time"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pb-3">
+        <div class="col col-12">
+          <span class="text-muted">Trip Route</span>
+        </div>
+        <div class="col col-12">
+          <div class="form-group">
+            <mat-form-field class="d-block">
+              <mat-label>From</mat-label>
+              <input
+                type="text"
+                formControlName="routeFrom"
+                matInput
+                [matAutocomplete]="auto"
+              />
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  *ngFor="let city of parsedCityList"
+                  [value]="city.citymunDesc"
+                >
+                  {{ city.citymunDesc }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col col-12">
+          <div class="form-group">
+            <mat-form-field class="d-block">
+              <mat-label>To</mat-label>
+              <input
+                type="text"
+                formControlName="routeTo"
+                matInput
+                [matAutocomplete]="auto"
+              />
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  *ngFor="let city of parsedCityList"
+                  [value]="city.citymunDesc"
+                >
+                  {{ city.citymunDesc }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="row pb-3">
+        <div class="col col-12">
+          <button class="d-block" mat-flat-button color="primary" (click)="setScanPayload()">
+            Set Trip Details
+          </button>
+        </div>
+      </div>
     </div>
+    <div class="col col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 pb-3">
+      <div class="card">
+        <div class="card-body">
+          <mat-form-field class="d-block">
+            <mat-label>-- Select Camera Device --</mat-label>
+            <mat-select
+              [value]="deviceSelected"
+              (valueChange)="onDeviceSelectChange($event)"
+            >
+              <mat-option value="">No Device Selected</mat-option>
+              <mat-option
+                *ngFor="let device of availableDevices"
+                [value]="device.deviceId"
+                >{{ device.label }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <zxing-scanner
+            [formats]="allowedFormats"
+            (scanSuccess)="onCodeResult($event)"
+            [device]="deviceCurrent"
+            (deviceChange)="onDeviceChange($event)"
+            (camerasFound)="onCamerasFound($event)"
+          ></zxing-scanner>
+          <strong>{{ qrResultString }}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -375,9 +375,10 @@
 <div class="qr-body" *ngIf="category == 'pass-registration-complete'">
   <qrcode
     class="qr-container"
-    [qrdata]="qrPassengerData.secret_id"
+    [qrdata]="qrData" 
     [width]="200"
     [errorCorrectionLevel]="'M'"
+    [allowEmptyString]="true"
   ></qrcode>
   <h4>
     <strong>{{ qrPassengerData.fullname }}</strong>

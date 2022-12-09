@@ -7,30 +7,30 @@
   >
     <div class="sidebar-heading border-bottom app-text-logo">
       <span class="pass">Pass</span><span class="sakay">Sakay</span>
-      <span class="bus-driver">Bus Driver</span>
+      <span class="admin">Admin Panel</span>
     </div>
     <div class="list-group list-group-flush">
       <a
         class="list-group-item list-group-item-action list-group-item-light p-3"
-        [routerLink]="['/bus-driver/dashboard']"
+        [routerLink]="['/admin/dashboard']"
         routerLinkActive="active"
         >Dashboard</a
       >
       <a
         class="list-group-item list-group-item-action list-group-item-light p-3"
-        [routerLink]="['/bus-driver/qr-scanner']"
+        [routerLink]="['/admin/passenger']"
         routerLinkActive="active"
-        >Scan QR</a
+        >Passenger</a
       >
       <a
         class="list-group-item list-group-item-action list-group-item-light p-3"
-        [routerLink]="['/bus-driver/trips']"
+        [routerLink]="['/admin/trips']"
         routerLinkActive="active"
         >Trips</a
       >
       <a
         class="list-group-item list-group-item-action list-group-item-light p-3"
-        [routerLink]="['/bus-driver/reports']"
+        [routerLink]="['/admin/reports']"
         routerLinkActive="active"
         >Reports</a
       >
@@ -75,20 +75,20 @@
               >
                 <a
                   class="dropdown-item"
-                  [routerLink]="['/bus-driver/profile']"
+                  [routerLink]="['/admin/profile']"
                   routerLinkActive="active"
                   >User Profile</a
                 >
                 <a
                   class="dropdown-item"
-                  [routerLink]="['/bus-driver/change-password']"
+                  [routerLink]="['/admin/change-password']"
                   routerLinkActive="active"
                   >Change Password</a
                 >
                 <div class="dropdown-divider"></div>
                 <a
                   class="dropdown-item"
-                  [routerLink]="['/bus-driver/logout']"
+                  [routerLink]="['/admin/logout']"
                   routerLinkActive="active"
                   >Logout</a
                 >

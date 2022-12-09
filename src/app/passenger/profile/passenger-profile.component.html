@@ -86,7 +86,7 @@
         <div class="col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 pb-3">
           <div class="form-group">
             <label>Gender</label>
-            <div class="gender-radio d-flex flex-row gap-3 align-items-center">
+            <div class="custom-radio d-flex flex-row gap-3 align-items-center">
               <div class="form-check form-check-inline">
                 <input
                   class="form-check-input"
@@ -115,7 +115,7 @@
                 class="form-control pointer"
                 formControlName="gender"
                 placeholder="-- Choose a gender --"
-                [ngbTypeahead]="search"
+                [ngbTypeahead]="autoCompleteGender"
                 (focus)="focus$.next($any($event).target.value)"
                 (click)="click$.next($any($event).target.value)"
                 #typeAheadInstance="ngbTypeahead"
