@@ -24,10 +24,15 @@
           </tr>
         </thead>
         <tbody>
+          <tr *ngIf="passengerList.length === 0">
+            <td colspan="6" class="text-center text-muted bg-light py-4">
+              No data yet. Try adding some.
+            </td>
+          </tr>
           <tr class="pointer" *ngFor="let passenger of passengerList" (click)="onSelectRow(passenger)">
             <td><strong>{{ passenger.rowId }}</strong></td>
             <td>{{ passenger.Fullname }}</td>
-            <td>{{ passenger.Address }}t</td>
+            <td>{{ passenger.Address }}</td>
             <td>{{ passenger.PhoneNumber }}</td>
             <td>
               {{ passenger.Status ? 'Active' : 'Inactive'}}

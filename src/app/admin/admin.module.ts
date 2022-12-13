@@ -10,6 +10,7 @@ import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PassengerComponent } from './passenger/passenger.component';
 import { BusAccountComponent } from './bus-accounts/bus-accounts.component';
+import { TripScheduleComponent } from './trip-schedules/trip-schedule.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -28,6 +29,7 @@ import { MatSelectModule } from '@angular/material/select';
     DashboardComponent,
     PassengerComponent,
     BusAccountComponent,
+    TripScheduleComponent,
   ],
   imports: [
     CommonModule,

@@ -4,6 +4,7 @@ import { AdminComponent } from './admin.component';
 import { BusAccountComponent } from './bus-accounts/bus-accounts.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PassengerComponent } from './passenger/passenger.component';
+import { TripScheduleComponent } from './trip-schedules/trip-schedule.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'bus-accounts',
         component: BusAccountComponent,
+      },
+      {
+        path: 'trip-schedules',
+        component: TripScheduleComponent,
       },
     ]
   }
