@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { LocalStorageService } from 'src/services/local-storage.service';
+import { PassSakayCollectionService } from 'src/services/pass-sakay-api.service';
 
 @Component({
   selector: 'app-passenger',
@@ -7,8 +11,44 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PassengerComponent implements OnInit {
   public breakpoint: number = 0;
+  public passengerList: Array<any> = []
 
-  constructor() { }
+  constructor(
+    private localStorageService: LocalStorageService,
+    private route: Router,
+    private snackBarService: MatSnackBar,
+    private passSakayAPIService: PassSakayCollectionService
+  ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.getAllPassengers();
+  }
+
+  getAllPassengers = () => {
+    this.passSakayAPIService.getAllPassengerData()
+      .then((data: any) => {
+        data.forEach((passengerData: any, index: number) => {
+          const fullname = `
+            ${passengerData.lastname}, 
+            ${passengerData.firstname} 
+            ${passengerData.middlename ? passengerData.middlename : ""}
+          `
+          this.passengerList.push({
+            _id: passengerData._id,
+            rowId: index+1,
+            Fullname: fullname,
+            Address: passengerData.currentAddress,
+            PhoneNumber: passengerData.phoneNumber,
+            Status: passengerData.status
+          })
+        });
+      })
+      .catch((error: any) => {
+        this.snackBarService.open("Failed to load passenger data. Check your internet connection.", "Got it")
+      })
+  }
+
+  onSelectRow = (passengerData: any) =>{
+    console.log(passengerData);
+  }
 }

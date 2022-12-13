@@ -111,4 +111,40 @@ export class PassSakayCollectionService {
       .post(endpoint, body, { headers: headers })
       .pipe(map((data: Object) => data));
   }
+
+  public getAllPassengerData(): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      this.apiGetAllPassengerData().subscribe((data: Object) => {
+        resolve(data);
+      }),
+        (err: any): void => {
+          reject(err);
+        };
+    });
+  }
+  private apiGetAllPassengerData(): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
+    const endpoint = environment.api_base_url + 'passengers/';
+    return this.httpClientNoInterceptor
+      .get(endpoint, { headers: headers })
+      .pipe(map((data: Object) => data));
+  }
+
+  public getAllBusAccountData(): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      this.apiGetAllBusAccountData().subscribe((data: Object) => {
+        resolve(data);
+      }),
+        (err: any): void => {
+          reject(err);
+        };
+    });
+  }
+  private apiGetAllBusAccountData(): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
+    const endpoint = environment.api_base_url + 'bus-drivers/';
+    return this.httpClientNoInterceptor
+      .get(endpoint, { headers: headers })
+      .pipe(map((data: Object) => data));
+  }
 }

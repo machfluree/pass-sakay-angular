@@ -2,7 +2,7 @@
   <div class="row pt-3">
     <div class="passenger-page-title col col-12">
       <div class="d-flex flex-row justify-content-between align-items-center">
-        <h1 class="m-0 p-0">Passengers</h1>
+        <h1 class="m-0 p-0">Bus Accounts</h1>
         <button class="m-0 p-0" mat-fab color="warn" aria-label="Edit Profile">
           <mat-icon>save_alt</mat-icon>
         </button>
@@ -16,25 +16,38 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Passenger Name</th>
-            <th scope="col">Address</th>
-            <th scope="col">Phone Number</th>
+            <th scope="col">Bus Number</th>
+            <th scope="col">Bus Name</th>
+            <th scope="col">Bus Province</th>
+            <th scope="col">Verified?</th>
             <th scope="col">Status</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
+        <tbody></tbody>
         <tbody>
-          <tr class="pointer" *ngFor="let passenger of passengerList" (click)="onSelectRow(passenger)">
-            <td><strong>{{ passenger.rowId }}</strong></td>
-            <td>{{ passenger.Fullname }}</td>
-            <td>{{ passenger.Address }}t</td>
-            <td>{{ passenger.PhoneNumber }}</td>
+          <tr
+            class="pointer"
+            *ngFor="let busAccount of busAccountList"
+            (click)="onSelectRow(busAccount)"
+          >
             <td>
-              {{ passenger.Status ? 'Active' : 'Inactive'}}
+              <strong>{{ busAccount.rowId }}</strong>
+            </td>
+            <td>{{ busAccount.BusNumber }}</td>
+            <td>{{ busAccount.BusName }}t</td>
+            <td>{{ busAccount.BusProvince }}</td>
+            <td>
+              {{ busAccount.Verified ? "Verified" : "Not Verified" }}
+            </td>
+            <td>
+              {{ busAccount.Status ? "Active" : "Inactive" }}
             </td>
             <td>
               <button type="button" class="btn btn-primary btn-sm">View</button>
-              <button type="button" class="btn btn-secondary btn-sm">Delete</button>
+              <button type="button" class="btn btn-secondary btn-sm">
+                Delete
+              </button>
             </td>
           </tr>
         </tbody>

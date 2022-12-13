@@ -9,6 +9,7 @@ import { LayoutModule } from './layout/layout.module';
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PassengerComponent } from './passenger/passenger.component';
+import { BusAccountComponent } from './bus-accounts/bus-accounts.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -25,7 +26,8 @@ import { MatSelectModule } from '@angular/material/select';
   declarations: [
     AdminComponent,
     DashboardComponent,
-    PassengerComponent
+    PassengerComponent,
+    BusAccountComponent,
   ],
   imports: [
     CommonModule,
