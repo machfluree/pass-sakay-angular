@@ -10,6 +10,7 @@ import { PassengerComponent } from './passenger.component';
 import { LayoutModule } from './layout/layout.module';
 import { PassengerProfileComponent } from './profile/passenger-profile.component';
 import { PassengerTripHistoryComponent } from './trip-history/passenger-trip-history.component';
+import { PassengerTripScheduleComponent } from './trip-schedules/trip-schedule.component';
 import { PassengerAccountSettingsComponent } from './account-settings/passenger-account-settings.component';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,6 +28,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     PassengerProfileComponent,
     PassengerTripHistoryComponent,
     PassengerAccountSettingsComponent,
+    PassengerTripScheduleComponent,
   ],
   imports: [
     CommonModule,

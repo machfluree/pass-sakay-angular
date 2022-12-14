@@ -4,6 +4,7 @@ import { PassengerComponent } from './passenger.component';
 import { PassengerProfileComponent } from './profile/passenger-profile.component';
 import { PassengerTripHistoryComponent } from './trip-history/passenger-trip-history.component';
 import { PassengerAccountSettingsComponent } from './account-settings/passenger-account-settings.component';
+import { PassengerTripScheduleComponent } from './trip-schedules/trip-schedule.component';
 
 const routes: Routes = [
   { 
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: 'trip-history',
         component: PassengerTripHistoryComponent
+      },
+      {
+        path: 'trip-schedule',
+        component: PassengerTripScheduleComponent
       },
       {
         path: 'account-settings',
