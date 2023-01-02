@@ -4,7 +4,10 @@ import { AdminComponent } from './admin.component';
 import { BusAccountComponent } from './bus-accounts/bus-accounts.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PassengerComponent } from './passenger/passenger.component';
+import { PassengerAddEditComponent } from './passenger-addEdit/passenger-addEdit.component';
+import { BusAccountAddEditComponent } from './bus-accounts-addEdit/bus-accounts-addEdit.component';
 import { TripScheduleComponent } from './trip-schedules/trip-schedule.component';
+import { TripScheduleAddEditComponent } from './trip-schedules-addEdit/trip-schedules-addEdit.component';
 
 const routes: Routes = [
   {
@@ -20,12 +23,36 @@ const routes: Routes = [
         component: PassengerComponent,
       },
       {
+        path: 'passengers/:id',
+        component: PassengerAddEditComponent,
+      },
+      {
+        path: 'passengers/add',
+        component: PassengerAddEditComponent,
+      },
+      {
         path: 'bus-accounts',
         component: BusAccountComponent,
       },
       {
+        path: 'bus-accounts/:id',
+        component: BusAccountAddEditComponent,
+      },
+      {
+        path: 'bus-accounts/add',
+        component: BusAccountAddEditComponent,
+      },
+      {
         path: 'trip-schedules',
         component: TripScheduleComponent,
+      },
+      {
+        path: 'trip-schedules/:id',
+        component: TripScheduleAddEditComponent,
+      },
+      {
+        path: 'trip-schedules/add',
+        component: TripScheduleAddEditComponent,
       },
     ]
   }

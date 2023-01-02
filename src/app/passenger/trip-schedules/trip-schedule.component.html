@@ -22,7 +22,6 @@
             <th scope="col">Time</th>
             <th scope="col">Route</th>
             <th scope="col">Status</th>
-            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -46,12 +45,6 @@
             <td>{{ tripSched.Route }}</td>
             <td>
               {{ tripSched.Status ? "Active" : "Inactive" }}
-            </td>
-            <td>
-              <button type="button" class="btn btn-primary btn-sm">View</button>
-              <button type="button" class="btn btn-secondary btn-sm">
-                Delete
-              </button>
             </td>
           </tr>
         </tbody>

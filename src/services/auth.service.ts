@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LocalStorageService } from 'src/services/local-storage.service';
@@ -14,15 +15,26 @@ export class AuthService {
   constructor(
     private httpClientNoInterceptor: HttpClient,
     public localStorageService: LocalStorageService,
-    private snackBar: MatSnackBar
+    private snackBarService: MatSnackBar,
+    private router: Router,
   ) { }
 
   public hasError: Boolean = false;
   public userData: Object = {};
 
+  openSnackBar(message: string, action: string) {
+    this.snackBarService.open(message, action);  
+  }
+
   public checkAuth(data: any): any {
     const loginData = this.localStorageService.get(data)
-    return jwt_decode(loginData.accessToken);
+    if (!loginData && !loginData.accessToken) {
+      this.router.navigate(['/welcome/login']).then(() => {
+        this.openSnackBar("Missing access token. Please login first.", "Got it");
+      });
+    } else {
+      return jwt_decode(loginData.accessToken);
+    }
   }
 
   public async loginUser(body: any): Promise<any> {

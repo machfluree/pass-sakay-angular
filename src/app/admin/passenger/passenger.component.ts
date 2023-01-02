@@ -15,7 +15,7 @@ export class PassengerComponent implements OnInit {
 
   constructor(
     private localStorageService: LocalStorageService,
-    private route: Router,
+    private router: Router,
     private snackBarService: MatSnackBar,
     private passSakayAPIService: PassSakayCollectionService
   ) { }
@@ -49,6 +49,11 @@ export class PassengerComponent implements OnInit {
   }
 
   onSelectRow = (passengerData: any) =>{
-    console.log(passengerData);
+    console.log("dfasdfasdf", passengerData);
+    this.router.navigate(['/admin/passengers/'+passengerData._id]);
+  }
+
+  onAddPassenger = () => {
+    this.router.navigate(['/admin/passengers/add']);
   }
 }

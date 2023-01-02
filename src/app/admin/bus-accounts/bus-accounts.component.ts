@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'src/services/local-storage.service';
 import { PassSakayCollectionService } from 'src/services/pass-sakay-api.service';
 
@@ -15,7 +15,8 @@ export class BusAccountComponent implements OnInit {
 
   constructor(
     private localStorageService: LocalStorageService,
-    private route: Router,
+    private router: Router,
+    private route: ActivatedRoute,
     private snackBarService: MatSnackBar,
     private passSakayAPIService: PassSakayCollectionService
   ) {}
@@ -55,5 +56,6 @@ export class BusAccountComponent implements OnInit {
 
   onSelectRow = (busAccountData: any) => {
     console.log(busAccountData);
+    this.router.navigate(['/admin/bus-accounts/' + busAccountData._id]);
   };
 }

@@ -9,8 +9,11 @@ import { LayoutModule } from './layout/layout.module';
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PassengerComponent } from './passenger/passenger.component';
+import { PassengerAddEditComponent } from './passenger-addEdit/passenger-addEdit.component';
 import { BusAccountComponent } from './bus-accounts/bus-accounts.component';
+import { BusAccountAddEditComponent } from './bus-accounts-addEdit/bus-accounts-addEdit.component';
 import { TripScheduleComponent } from './trip-schedules/trip-schedule.component';
+import { TripScheduleAddEditComponent } from './trip-schedules-addEdit/trip-schedules-addEdit.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -30,6 +33,9 @@ import { MatSelectModule } from '@angular/material/select';
     PassengerComponent,
     BusAccountComponent,
     TripScheduleComponent,
+    PassengerAddEditComponent,
+    BusAccountAddEditComponent,
+    TripScheduleAddEditComponent
   ],
   imports: [
     CommonModule,

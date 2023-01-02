@@ -35,7 +35,26 @@ export class PassSakayCollectionService {
     return this.httpClientNoInterceptor
       .post(endpoint, body, { headers: headers })
       .pipe(map((data: Object) => {
-        console.log("uam", data)
+        return data
+      }));
+  }
+
+  public updatePassenger(body: any, id: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      this.apiUpdatePassenger(body, id).subscribe((data: Object) => {
+        resolve(data);
+      }),
+      (err: any): void => {
+        reject(err);
+      };
+    });
+  }
+  private apiUpdatePassenger(body: any, id: string): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
+    const endpoint = environment.api_base_url + 'passengers/' + id;
+    return this.httpClientNoInterceptor
+      .put(endpoint, body, { headers: headers })
+      .pipe(map((data: Object) => {
         return data
       }));
   }
@@ -56,6 +75,26 @@ export class PassSakayCollectionService {
     return this.httpClientNoInterceptor
       .post(endpoint, body, { headers: headers })
       .pipe(map((data: Object) => data));
+  }
+
+  public updateBusAccount(body: any, id: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      this.apiUpdateBusAccount(body, id).subscribe((data: Object) => {
+        resolve(data);
+      }),
+      (err: any): void => {
+        reject(err);
+      };
+    });
+  }
+  private apiUpdateBusAccount(body: any, id: string): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
+    const endpoint = environment.api_base_url + 'bus-drivers/' + id;
+    return this.httpClientNoInterceptor
+      .put(endpoint, body, { headers: headers })
+      .pipe(map((data: Object) => {
+        return data
+      }));
   }
 
   public addAccount(body: any): Promise<any> {
@@ -89,6 +128,24 @@ export class PassSakayCollectionService {
   private apiGetOnePassengerData(id: any): Observable<any> {
     const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
     const endpoint = environment.api_base_url + 'passengers/' + id.toString();
+    return this.httpClientNoInterceptor
+      .get(endpoint, { headers: headers })
+      .pipe(map((data: Object) => data));
+  }
+
+  public getOneBusAccountData(id: any): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      this.apiGetOneBusAccountData(id).subscribe((data: Object) => {
+        resolve(data);
+      }),
+        (err: any): void => {
+          reject(err);
+        };
+    });
+  }
+  private apiGetOneBusAccountData(id: any): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
+    const endpoint = environment.api_base_url + 'bus-drivers/' + id.toString();
     return this.httpClientNoInterceptor
       .get(endpoint, { headers: headers })
       .pipe(map((data: Object) => data));
@@ -164,5 +221,43 @@ export class PassSakayCollectionService {
     return this.httpClientNoInterceptor
       .get(endpoint, { headers: headers })
       .pipe(map((data: Object) => data));
+  }
+
+  public getOneTripScheduleData(id: any): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      this.apiGetOneTripScheduleData(id).subscribe((data: Object) => {
+        resolve(data);
+      }),
+        (err: any): void => {
+          reject(err);
+        };
+    });
+  }
+  private apiGetOneTripScheduleData(id: any): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
+    const endpoint = environment.api_base_url + 'trip-schedules/' + id.toString();
+    return this.httpClientNoInterceptor
+      .get(endpoint, { headers: headers })
+      .pipe(map((data: Object) => data));
+  }
+
+  public updateTripSchedule(body: any, id: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      this.apiUpdateTripSchedule(body, id).subscribe((data: Object) => {
+        resolve(data);
+      }),
+      (err: any): void => {
+        reject(err);
+      };
+    });
+  }
+  private apiUpdateTripSchedule(body: any, id: string): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
+    const endpoint = environment.api_base_url + 'trip-schedules/' + id;
+    return this.httpClientNoInterceptor
+      .put(endpoint, body, { headers: headers })
+      .pipe(map((data: Object) => {
+        return data
+      }));
   }
 }

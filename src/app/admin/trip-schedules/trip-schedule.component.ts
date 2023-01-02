@@ -15,7 +15,7 @@ export class TripScheduleComponent implements OnInit {
 
   constructor(
     private localStorageService: LocalStorageService,
-    private route: Router,
+    private router: Router,
     private snackBarService: MatSnackBar,
     private passSakayAPIService: PassSakayCollectionService
   ) {}
@@ -49,7 +49,7 @@ export class TripScheduleComponent implements OnInit {
       });
   };
 
-  onSelectRow = (busAccountData: any) => {
-    console.log(busAccountData);
+  onSelectRow = (tripSchedData: any) => {
+    this.router.navigate(['/admin/trip-schedules/' + tripSchedData._id]);
   };
 }
