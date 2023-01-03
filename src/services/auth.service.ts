@@ -28,7 +28,7 @@ export class AuthService {
 
   public checkAuth(data: any): any {
     const loginData = this.localStorageService.get(data)
-    if (!loginData && !loginData.accessToken) {
+    if (!loginData) {
       this.router.navigate(['/welcome/login']).then(() => {
         this.openSnackBar("Missing access token. Please login first.", "Got it");
       });

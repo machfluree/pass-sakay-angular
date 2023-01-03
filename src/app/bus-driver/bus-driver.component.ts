@@ -27,7 +27,7 @@ export class BusDriverComponent implements OnInit {
   ngOnInit(): void {
     const loginData = this.authService.checkAuth(environment.STORAGE_KEY).data;
     const parsedLoginData = JSON.parse(loginData);
-    if (parsedLoginData && parsedLoginData.userRole == environment.USER_ROLE.BusDriver) {
+    if (loginData && parsedLoginData && parsedLoginData.userRole == environment.USER_ROLE.BusDriver) {
       this.userData = parsedLoginData;
     } else {
       this.router.navigate(['/welcome/login']);
