@@ -43,7 +43,7 @@ export class TripScheduleComponent implements OnInit {
       })
       .catch((error: any) => {
         this.snackBarService.open(
-          'Failed to load passenger data. Check your internet connection.',
+          'Failed to load trip schedule data. Check your internet connection.',
           'Got it'
         );
       });

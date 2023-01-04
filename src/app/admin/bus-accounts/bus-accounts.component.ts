@@ -48,7 +48,7 @@ export class BusAccountComponent implements OnInit {
       })
       .catch((error: any) => {
         this.snackBarService.open(
-          'Failed to load passenger data. Check your internet connection.',
+          'Failed to load bus account data. Check your internet connection.',
           'Got it'
         );
       });

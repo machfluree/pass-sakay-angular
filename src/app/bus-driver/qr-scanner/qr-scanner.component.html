@@ -7,13 +7,16 @@
     </div>
   </div>
   <div class="row">
-    <div class="col col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 pb-3" [formGroup]="tripDetailsFormGroup">
+    <div
+      class="col col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+      [formGroup]="tripDetailsFormGroup"
+    >
       <div class="row">
         <div class="col col-12 pb-3">
-          <div class="form-group-name">START QR SCANNING SESSION</div>
+          <div class="form-group-name">START QR SCANNING</div>
         </div>
-        <div class="col col-12 pb-3">
-          <div class="form-group">
+        <div class="col col-12">
+          <div class="form-group mb-3">
             <label>Select trip action</label>
             <div class="custom-radio d-flex flex-row gap-3 align-items-center">
               <div class="form-check form-check-inline">
@@ -23,7 +26,7 @@
                   type="radio"
                   name="tripAction"
                   id="onboarding"
-                  value="On-boarding"
+                  value="scan-in"
                 />
                 <label class="form-check-label" for="onboarding"
                   >On-boarding</label
@@ -36,7 +39,7 @@
                   type="radio"
                   name="tripAction"
                   id="offboarding"
-                  value="Off-boarding"
+                  value="scan-out"
                 />
                 <label class="form-check-label" for="offboarding"
                   >Off-boarding</label
@@ -44,10 +47,25 @@
               </div>
             </div>
           </div>
+          <div class="form-group mb-3">
+            <mat-form-field class="d-block">
+              <mat-label>-- Select Trip Schedule --</mat-label>
+              <mat-select formControlName="tripSched">
+                <mat-option value="">No Trip Schedule Selected</mat-option>
+                <mat-option
+                  *ngFor="let tripSched of tripScheduleList"
+                  [value]="tripSched._id"
+                  >{{ tripSched.ScheduleName }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 pb-3">
+    <div
+      class="col col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 pb-3"
+    >
       <div class="card">
         <div class="card-body">
           <mat-form-field class="d-block">
@@ -65,6 +83,8 @@
             </mat-select>
           </mat-form-field>
           <zxing-scanner
+            *ngIf="scannerEnabled"
+            #scanner
             [formats]="allowedFormats"
             (scanSuccess)="onCodeResult($event)"
             [device]="deviceCurrent"
@@ -72,6 +92,16 @@
             (camerasFound)="onCamerasFound($event)"
           ></zxing-scanner>
           <strong>{{ qrResultString }}</strong>
+          <div class="d-grid">
+            <button
+              (click)="enableScanning()"
+              [disabled]="scannerEnabled || isFormIncomplete"
+              class="btn btn-primary btn-lg"
+              data-bs-toggle="button"
+            >
+              Start Scan
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -260,4 +260,22 @@ export class PassSakayCollectionService {
         return data
       }));
   }
+
+  public getAllTripHistoryDataViaPassenger(id: any): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      this.apiGetAllTripHistoryDataViaPassenger(id).subscribe((data: Object) => {
+        resolve(data);
+      }),
+        (err: any): void => {
+          reject(err);
+        };
+    });
+  }
+  private apiGetAllTripHistoryDataViaPassenger(id: any): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
+    const endpoint = environment.api_base_url + 'scanned-qr/trip-history/' + id;
+    return this.httpClientNoInterceptor
+      .get(endpoint, { headers: headers })
+      .pipe(map((data: Object) => data));
+  }
 }

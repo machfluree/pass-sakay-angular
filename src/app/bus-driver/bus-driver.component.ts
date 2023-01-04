@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class BusDriverComponent implements OnInit {
 
   sideNavOpened: boolean = true;
-  userData: any = {};
+  public userData: any = {};
 
   constructor(
     public authService: AuthService,
