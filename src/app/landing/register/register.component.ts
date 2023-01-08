@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/services/local-storage.service';
 import { PassSakayCollectionService } from 'src/services/pass-sakay-api.service';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-register',
@@ -13,10 +14,14 @@ import { PassSakayCollectionService } from 'src/services/pass-sakay-api.service'
 export class RegisterComponent implements OnInit {
   constructor(
     private localStorageService: LocalStorageService,
-    private route: Router,
+    private router: Router,
     private snackBarService: MatSnackBar,
-    private passSakayAPIService: PassSakayCollectionService
+    private passSakayAPIService: PassSakayCollectionService,
   ) {}
+
+  @ViewChild('screen') screen!: ElementRef;
+  @ViewChild('canvas') canvas!: ElementRef;
+  @ViewChild('downloadLink') downloadLink!: ElementRef;
 
   public category: string = '';
   public passengerStepControls: string = '';
@@ -226,6 +231,19 @@ export class RegisterComponent implements OnInit {
   handleDownloadQRCode = () => {
     console.log('qr downloaded!');
   };
+
+  downloadImage(){
+    html2canvas(this.screen.nativeElement).then((canvas: any) => {
+      this.canvas.nativeElement.src = canvas.toDataURL();
+      this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
+      this.downloadLink.nativeElement.download = 'qr-code-do-not-share.png';
+      this.downloadLink.nativeElement.click();
+    });
+  }
+
+  gotoLoginPage = () => {
+    this.router.navigate(['/welcome/login']);
+  }
 
   ngDoCheck(): void {
     if (this.category === 'passenger' && this.passengerStepControls === '') {

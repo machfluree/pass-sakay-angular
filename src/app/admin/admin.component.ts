@@ -13,8 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AdminComponent implements OnInit {
 
-  sideNavOpened: boolean = true;
-  userData: any = {};
+  public sideNavOpened: boolean = true;
+  public userData: any = {};
 
   constructor(
     public authService: AuthService,

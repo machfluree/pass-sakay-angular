@@ -8,6 +8,7 @@ import { PassengerAddEditComponent } from './passenger-addEdit/passenger-addEdit
 import { BusAccountAddEditComponent } from './bus-accounts-addEdit/bus-accounts-addEdit.component';
 import { TripScheduleComponent } from './trip-schedules/trip-schedule.component';
 import { TripScheduleAddEditComponent } from './trip-schedules-addEdit/trip-schedules-addEdit.component';
+import { TripHistoryComponent } from './trip-history/trip-history.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,14 @@ const routes: Routes = [
       {
         path: 'trip-schedules/add',
         component: TripScheduleAddEditComponent,
+      },
+      {
+        path: 'trip-history',
+        component: TripHistoryComponent,
+      },
+      {
+        path: 'trip-history/:id',
+        component: TripHistoryComponent,
       },
     ]
   }

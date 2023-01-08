@@ -278,4 +278,40 @@ export class PassSakayCollectionService {
       .get(endpoint, { headers: headers })
       .pipe(map((data: Object) => data));
   }
+
+  public getAllTripHistoryDataViaBusAccount(id: any): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      this.apiGetAllTripHistoryDataViaBusAccount(id).subscribe((data: Object) => {
+        resolve(data);
+      }),
+        (err: any): void => {
+          reject(err);
+        };
+    });
+  }
+  private apiGetAllTripHistoryDataViaBusAccount(id: any): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
+    const endpoint = environment.api_base_url + 'scanned-qr/bus-account/' + id;
+    return this.httpClientNoInterceptor
+      .get(endpoint, { headers: headers })
+      .pipe(map((data: Object) => data));
+  }
+
+  public getAllTripHistoryData(): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      this.apiGetAllTripHistoryData().subscribe((data: Object) => {
+        resolve(data);
+      }),
+        (err: any): void => {
+          reject(err);
+        };
+    });
+  }
+  private apiGetAllTripHistoryData(): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
+    const endpoint = environment.api_base_url + 'scanned-qr/';
+    return this.httpClientNoInterceptor
+      .get(endpoint, { headers: headers })
+      .pipe(map((data: Object) => data));
+  }
 }

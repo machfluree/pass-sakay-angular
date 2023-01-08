@@ -44,24 +44,24 @@
   padding: 0 100px 0 100px;
   text-align: center;
 
-  .icon-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: auto;
-    height: auto;
-
-    mat-icon {
-      font-size: 64pt;
-      width: 64pt;
-      height: 64pt;
-      color: #428a82;
-    }
-  }
-
   p {
     max-width: 300px;
+  }
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: auto;
+  height: auto;
+
+  mat-icon {
+    font-size: 64pt;
+    width: 64pt;
+    height: 64pt;
+    color: #428a82;
   }
 }
 

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BusDriverComponent } from './bus-driver.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { QrScannerComponent } from './qr-scanner/qr-scanner.component';
+import { TripHistoryComponent } from './trip-history/trip-history.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'qr-scanner',
         component: QrScannerComponent,
+      },
+      {
+        path: 'trip-history',
+        component: TripHistoryComponent,
       },
     ]
   }

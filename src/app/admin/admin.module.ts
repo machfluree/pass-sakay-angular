@@ -14,6 +14,7 @@ import { BusAccountComponent } from './bus-accounts/bus-accounts.component';
 import { BusAccountAddEditComponent } from './bus-accounts-addEdit/bus-accounts-addEdit.component';
 import { TripScheduleComponent } from './trip-schedules/trip-schedule.component';
 import { TripScheduleAddEditComponent } from './trip-schedules-addEdit/trip-schedules-addEdit.component';
+import { TripHistoryComponent } from './trip-history/trip-history.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -35,7 +36,8 @@ import { MatSelectModule } from '@angular/material/select';
     TripScheduleComponent,
     PassengerAddEditComponent,
     BusAccountAddEditComponent,
-    TripScheduleAddEditComponent
+    TripScheduleAddEditComponent,
+    TripHistoryComponent,
   ],
   imports: [
     CommonModule,
