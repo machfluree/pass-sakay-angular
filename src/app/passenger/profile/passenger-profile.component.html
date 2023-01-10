@@ -20,18 +20,31 @@
       class="passenger-profile-qr col col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 pb-5"
     >
       <div
+        
         class="d-flex flex-column gap-3 justify-content-center align-items-center"
       >
-        <div class="border border-dark rounded">
-          <qrcode
-            class="passenger-qr"
-            [qrdata]="passengerQRData"
-            [width]="320"
-            [errorCorrectionLevel]="'M'"
-            [allowEmptyString]="true"
-          ></qrcode>
+        <div id="image-section" style="background-color: white;" class="px-2 py-2 flex flex-col gap-2">
+          <div class="border border-dark rounded" id="image-section">
+            <qrcode
+              class="passenger-qr"
+              [qrdata]="passengerQRData"
+              [width]="250"
+              [errorCorrectionLevel]="'M'"
+              [allowEmptyString]="true"
+            ></qrcode>
+          </div>
+          <span class="text-center fw-bold text-uppercase">
+            {{ 
+              passengerData.lastname + ', ' + 
+              passengerData.firstname + ' ' + 
+              passengerData.middlename 
+            }}
+          </span>
+          <span class="text-center fw-light text-capitalize">
+            {{ passengerData.currentAddress }}
+          </span>
         </div>
-        <button mat-raised-button color="primary">
+        <button mat-raised-button color="primary" (click)="generateImage()">
           Download QR Code as Image
         </button>
       </div>

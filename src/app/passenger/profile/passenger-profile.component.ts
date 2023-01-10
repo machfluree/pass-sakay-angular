@@ -20,6 +20,8 @@ import { environment } from 'src/environments/environment';
 import { PassSakayCollectionService } from 'src/services/pass-sakay-api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
+import html2canvas from 'html2canvas';
+import * as htmlToImage from 'html-to-image';
 
 @Component({
   selector: 'app-passenger-profile',
@@ -34,7 +36,7 @@ export class PassengerProfileComponent implements OnInit {
   public model!: NgbDateStruct;
 
   public genderList: Array<string> = ['Male', 'Female'];
-  public passengerData: Object = {};
+  public passengerData: any = {};
   public passengerQRData!: string;
   public editMode: boolean = false;
   public passengerDataFormGroup!: FormGroup;
@@ -80,7 +82,7 @@ export class PassengerProfileComponent implements OnInit {
         }
         if (!response.error) {
           this.passengerQRData = JSON.stringify({
-            passenger: response._id
+            passenger: response._id,
           });
           this.setFormValues(response);
           this.passengerData = response;
@@ -149,6 +151,22 @@ export class PassengerProfileComponent implements OnInit {
   };
 
   onSavePassengerData = () => {};
+
+  generateImage(){
+    var node:any = document.getElementById('image-section');
+    htmlToImage.toPng(node)
+      .then(function (dataUrl) {
+        var img = new Image();
+        img.src = dataUrl;
+        const link = document.createElement("a");
+        link.download = "passenger-qr.png";
+        link.href = "data:" + img.src;
+        link.click();
+      })
+      .catch(function (error) {
+        console.error('oops, something went wrong!', error);
+      });
+  }
 
   ngDoCheck(): void {
     // const field = this.passengerDataFormGroup.get('')
