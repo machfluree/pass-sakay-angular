@@ -10,6 +10,7 @@ import { BusDriverComponent } from './bus-driver.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { QrScannerComponent } from './qr-scanner/qr-scanner.component';
 import { TripHistoryComponent } from './trip-history/trip-history.component';
+import { ReportsComponent } from './reports/reports.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -28,6 +29,7 @@ import { MatSelectModule } from '@angular/material/select';
     QrScannerComponent,
     DashboardComponent,
     TripHistoryComponent,
+    ReportsComponent,
   ],
   imports: [
     CommonModule,

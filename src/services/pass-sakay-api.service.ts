@@ -314,4 +314,22 @@ export class PassSakayCollectionService {
       .get(endpoint, { headers: headers })
       .pipe(map((data: Object) => data));
   }
+
+  public getAllTripHistoryReport(body: any): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      this.apiGetAllTripHistoryReport(body).subscribe((data: Object) => {
+        resolve(data);
+      }),
+        (err: any): void => {
+          reject(err);
+        };
+    });
+  }
+  private apiGetAllTripHistoryReport(body: any): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders(this.httpHeaders);
+    const endpoint = environment.api_base_url + 'scanned-qr/reports';
+    return this.httpClientNoInterceptor
+      .post(endpoint, { headers: headers })
+      .pipe(map((data: Object) => data));
+  }
 }

@@ -1,0 +1,104 @@
+<div class="passenger-page container">
+  <div class="row pt-4">
+    <div class="passenger-page-title col col-12">
+      <div class="d-flex flex-row justify-content-between align-items-center">
+        <h1 class="m-0 p-0">Generate Trip Report</h1>
+        <button class="m-0 p-0" mat-fab color="warn" (click)="save()" aria-label="Edit Profile">
+          <mat-icon>save_alt</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div
+      class="passenger-profile-form col col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 pb-5"
+    >
+      <div class="row pb-3">
+        <div class="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pb-3">
+          <div class="form-group">
+            <label>Bus Name</label>
+            <select name="" id="" class="form-control form-select">
+              <option value="">Bus Name 2</option>
+              <option value="">Bus Name 3</option>
+              <option selected value="">Bus Name 1</option>
+              <option value="">Bus Name 4</option>
+            </select>
+            <!-- <small id="lastnameHelp" class="form-text text-muted">
+                We'll never share your email with anyone else.
+            </small> -->
+          </div>
+        </div>
+        <div class="col col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 pb-3">
+          <div class="form-group">
+            <label>From</label>
+            <div class="date-picker">
+              <span (click)="datepickerFrom.toggle()"></span>
+              <input
+                class="form-control"
+                type="text"
+                placeholder="-- Choose a date --"
+                name="birthdate"
+                formControlName="birthdate"
+                ngbDatepicker
+                #datepickerFrom="ngbDatepicker"
+                autocomplete="false"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 pb-3">
+          <div class="form-group">
+            <label>To</label>
+            <div class="date-picker">
+              <span (click)="datepickerTo.toggle()"></span>
+              <input
+                class="form-control"
+                type="text"
+                placeholder="-- Choose a date --"
+                name="birthdate"
+                formControlName="birthdate"
+                ngbDatepicker
+                #datepickerTo="ngbDatepicker"
+                autocomplete="false"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pb-3">
+          <div class="form-group">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+              <label class="form-check-label" for="flexSwitchCheckDefault">
+                Just today
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pb-3">
+        <div class="col col-12">
+          <div
+            class="d-flex flex-row justify-content-end gap-3"
+          >
+            <button
+              class="order-2"
+              mat-flat-button
+              color="primary"
+              (click)="generateHeaderFooterTable()"
+            >
+              Generate
+            </button>
+            <button
+              class="order-1"
+              mat-stroked-button
+              color="primary"
+            >
+              Clear
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

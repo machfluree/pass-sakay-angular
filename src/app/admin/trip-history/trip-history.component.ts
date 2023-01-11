@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import * as moment from 'moment';
 import { LocalStorageService } from 'src/services/local-storage.service';
@@ -13,7 +14,7 @@ import { AdminComponent } from '../admin.component';
   styleUrls: ['./trip-history.component.scss'],
 })
 export class TripHistoryComponent implements OnInit {
-  @ViewChild('content') content!:ElementRef;  
+  @ViewChild('content') content!: ElementRef;
   public breakpoint: number = 0;
 
   public tripHistoryList: Array<any> = [];
@@ -28,6 +29,7 @@ export class TripHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.getAllTripHistory();
+    
   }
 
   // /scanned-qr/trip-history/:passenger_id
@@ -44,6 +46,9 @@ export class TripHistoryComponent implements OnInit {
             Time: moment(tripHistory.time).format('HH:mm:ss A'),
             rowId: index + 1,
             BusName: `${tripHistory.busAccount.busName}`,
+            PassengerName: `${tripHistory.passengerAccount.lastname}, 
+              ${tripHistory.passengerAccount.firstname}
+              ${tripHistory.passengerAccount.middlename}`,
             ScanType: tripHistory.tripType,
             TripSched: `
               ${tripHistory.tripSched.name} 
@@ -65,23 +70,35 @@ export class TripHistoryComponent implements OnInit {
       });
   };
 
-  save(): void {  
-    console.log("sdafahdsfka")
-    let content=this.content.nativeElement;  
-    let doc: any = new jsPDF('p','mm','a4');  
-    let _elementHandlers =  
-    {  
-      '#editor':function(element: any, renderer: any){  
-        return true;  
-      }  
-    };  
-    doc.html(content.innerHTML, {  
-      'x': 15,
-      'y': 15,
-      'width':190,  
-      'elementHandlers':_elementHandlers  
-    });  
-  
-    doc.save('test.pdf');  
-  }  
+  save(): void {
+    console.log('sdafahdsfka');
+    let content = this.content.nativeElement;
+    let doc: any = new jsPDF('p', 'mm', 'a4');
+    let _elementHandlers = {
+      '#editor': function (element: any, renderer: any) {
+        return true;
+      },
+    };
+    doc.html(content.innerHTML, {
+      x: 15,
+      y: 15,
+      width: 190,
+      elementHandlers: _elementHandlers,
+    });
+
+    doc.save('test.pdf');
+  }
+
+  openPDF(): void {
+    let DATA: any = document.getElementById('htmlData');
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+      PDF.save('trip-history-list.pdf');
+    });
+  }
 }
