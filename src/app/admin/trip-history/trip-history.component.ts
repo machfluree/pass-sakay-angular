@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import jsPDF from 'jspdf';
 import * as moment from 'moment';
 import { LocalStorageService } from 'src/services/local-storage.service';
 import { PassSakayCollectionService } from 'src/services/pass-sakay-api.service';
@@ -12,6 +13,7 @@ import { AdminComponent } from '../admin.component';
   styleUrls: ['./trip-history.component.scss'],
 })
 export class TripHistoryComponent implements OnInit {
+  @ViewChild('content') content!:ElementRef;  
   public breakpoint: number = 0;
 
   public tripHistoryList: Array<any> = [];
@@ -62,4 +64,24 @@ export class TripHistoryComponent implements OnInit {
         );
       });
   };
+
+  save(): void {  
+    console.log("sdafahdsfka")
+    let content=this.content.nativeElement;  
+    let doc: any = new jsPDF('p','mm','a4');  
+    let _elementHandlers =  
+    {  
+      '#editor':function(element: any, renderer: any){  
+        return true;  
+      }  
+    };  
+    doc.html(content.innerHTML, {  
+      'x': 15,
+      'y': 15,
+      'width':190,  
+      'elementHandlers':_elementHandlers  
+    });  
+  
+    doc.save('test.pdf');  
+  }  
 }
