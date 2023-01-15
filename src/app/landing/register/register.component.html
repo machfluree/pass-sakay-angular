@@ -88,6 +88,7 @@
             matInput
             formControlName="birthdate"
             [matDatepicker]="picker"
+            (focus)="picker.open()"
           />
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle
@@ -129,6 +130,7 @@
             formControlName="contactNumber"
             type="text"
             value=""
+            (keypress)="numberOnly($event)"
           />
           <mat-error *ngIf="handleInputErrors('contactNumber', 'required')">
             This field is required.
@@ -142,6 +144,9 @@
             type="email"
             value=""
           />
+          <mat-error *ngIf="handleInputErrors('emailAddress', 'required')">
+            This field is required.
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="form-input">
           <mat-label>Current Address</mat-label>
@@ -174,7 +179,7 @@
             mat-flat-button
             color="primary"
             (click)="handleNextRegistrationPassenger('passenger-account')"
-            [disabled]="disableBasicInfoNext"
+            [disabled]="disableContactInfoNext"
           >
             Next
           </button>
@@ -228,7 +233,7 @@
             mat-flat-button
             color="primary"
             (click)="handleSubmitPassengerForm()"
-            [disabled]="disableSuccessRegister ? disableSuccessRegister : false"
+            [disabled]="disableSuccessRegister"
           >
             Submit
           </button>
@@ -249,7 +254,7 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field class="form-input">
-          <mat-label>Bus Number</mat-label>
+          <mat-label>Plate Number</mat-label>
           <input matInput formControlName="busNumber" type="text" value="" />
           <mat-error
             *ngIf="handleBusDriverInputErrors('busNumber', 'required')"
@@ -259,12 +264,13 @@
         </mat-form-field>
         <mat-form-field class="form-input">
           <mat-label>Province</mat-label>
-          <input matInput formControlName="busProvince" type="text" value="" />
-          <mat-error
-            *ngIf="handleBusDriverInputErrors('busProvince', 'required')"
-          >
-            This field is required.
-          </mat-error>
+          <mat-select formControlName="busProvince">
+            <mat-option
+              *ngFor="let city of parsedCityList"
+              [value]="city.citymunDesc"
+              >{{ city.citymunDesc }}</mat-option
+            >
+          </mat-select>
         </mat-form-field>
         <div class="form-wizard-controls">
           <button
@@ -306,26 +312,13 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field class="form-input">
-          <mat-label>Position</mat-label>
-          <input
-            matInput
-            formControlName="operatorPosition"
-            type="text"
-            value=""
-          />
-          <mat-error
-            *ngIf="handleBusDriverInputErrors('operatorPosition', 'required')"
-          >
-            This field is required.
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="form-input">
           <mat-label>Mobile Number</mat-label>
           <input
             matInput
             formControlName="operatorPhoneNumber"
             type="text"
             value=""
+            (keypress)="numberOnly($event)"
           />
           <mat-error
             *ngIf="
@@ -355,10 +348,47 @@
           <button
             mat-flat-button
             color="primary"
-            (click)="handleNextRegistrationBusDriver('bus-driver-account')"
+            (click)="handleNextRegistrationBusDriver('bus-driver-tempVac')"
             [disabled]="
               disableBusOperatorInfoNext ? disableBusOperatorInfoNext : false
             "
+          >
+            Next
+          </button>
+        </div>
+      </div>
+      <div
+        [ngClass]="
+          busdriverStepControls == 'bus-driver-tempVac' ? '' : 'hidden'
+        "
+      >
+        <div class="row py-2">
+          <mat-label class="pb-2">Accept passengers with temperature that exceeds 37.2 ℃?</mat-label>
+          <mat-radio-group formControlName="acceptHighTemp">
+            <mat-radio-button class="px-2" color="primary" value=1>Yes</mat-radio-button>
+            <mat-radio-button class="px-2" color="primary" value=0>No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="row py-2">
+          <mat-label class="pb-2">Accept passengers that are not yet vaccinated?</mat-label>
+          <mat-radio-group formControlName="acceptNoVaccination">
+            <mat-radio-button class="px-2" color="primary" value=1>Yes</mat-radio-button>
+            <mat-radio-button class="px-2" color="primary" value=0>No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="form-wizard-controls">
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="handleNextRegistrationBusDriver('bus-driver-tempVac')"
+          >
+            Previous
+          </button>
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="handleNextRegistrationBusDriver('bus-driver-account')"
+            [disabled]="disableBusOperatorScanOptNext"
           >
             Next
           </button>

@@ -15,7 +15,7 @@
         <div class="col col-12 pb-3">
           <div class="form-group-name">START QR SCANNING</div>
         </div>
-        <div class="col col-12">
+        <div class="qr-scan-input col col-12">
           <div class="form-group mb-3">
             <label>Select trip action</label>
             <div class="custom-radio d-flex flex-row gap-3 align-items-center">
@@ -47,11 +47,22 @@
               </div>
             </div>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group">
+            <mat-form-field class="d-block">
+              <mat-label>Temperature (max 37.2 C)</mat-label>
+              <input
+                type="number"
+                matInput
+                min="33"
+                max="43"
+                name="temperature"
+                formControlName="temperature">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
             <mat-form-field class="d-block">
               <mat-label>-- Select Trip Schedule --</mat-label>
               <mat-select formControlName="tripSched">
-                <mat-option value="">No Trip Schedule Selected</mat-option>
                 <mat-option
                   *ngFor="let tripSched of tripScheduleList"
                   [value]="tripSched._id"
@@ -60,6 +71,111 @@
               </mat-select>
             </mat-form-field>
           </div>
+          <div class="form-group">
+            <mat-form-field class="d-block">
+              <mat-label>Landmark (optional)</mat-label>
+              <input
+                type="text"
+                matInput
+                name="landmark"
+                formControlName="landmark">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field class="d-block">
+              <mat-label>-- Select City --</mat-label>
+              <mat-select formControlName="tripPlaceOfScan">
+                <mat-option
+                  *ngFor="let city of parsedCityList"
+                  [value]="city.citymunDesc"
+                  >{{ city.citymunDesc }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col col-12 qr-seatNumber">
+          <button mat-flat-button color="primary" (click)="openScrollableContent(longContent)">
+            Choose a Seat
+          </button>
+          <ng-template #longContent let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title">Choose a Seat for a Passenger</h4>
+              <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row p-2">
+                <div class="left-side col-6">
+                  <div class="row">
+                    <div class="col col-12">
+                      Left Side (Driver's Seat)
+                    </div>
+                    <div *ngFor="let seatCode of left" class="LA col col-12">
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          formControlName="seatNumber"
+                          type="radio"
+                          name="seatNumber"
+                          [id]="'L'+seatCode"
+                          [value]="'L'+seatCode"
+                        />
+                        <label class="form-check-label" [for]="'L'+seatCode">
+                          {{ 'L'+seatCode }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="right-side col-6">
+                  <div class="row">
+                    <div class="col col-12">
+                      Right Side (Door Side)
+                    </div>
+                    <div *ngFor="let seatCode of right" class="LA col col-12">
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          formControlName="seatNumber"
+                          type="radio"
+                          name="seatNumber"
+                          [id]="'R'+seatCode"
+                          [value]="'R'+seatCode"
+                        />
+                        <label class="form-check-label" [for]="'R'+seatCode">
+                          {{ 'R'+seatCode }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-12 mt-3">
+                  <div class="flex flex-row justify-content-between">
+                    <div class="text-center" *ngFor="let seatCode of back">
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          formControlName="seatNumber"
+                          type="radio"
+                          name="seatNumber"
+                          [id]="seatCode"
+                          [value]="seatCode"
+                        />
+                        <label class="form-check-label" [for]="seatCode">
+                          {{ seatCode }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button mat-flat-button color="primary" (click)="modal.close()">
+                Choose selected seat
+              </button>
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>

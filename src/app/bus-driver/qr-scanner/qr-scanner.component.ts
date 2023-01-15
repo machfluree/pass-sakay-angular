@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ZXingScannerComponent } from '@zxing/ngx-scanner';
 import { BusDriverComponent } from '../bus-driver.component';
 import { PassSakayCollectionService } from 'src/services/pass-sakay-api.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-qr-scanner',
@@ -34,12 +35,31 @@ export class QrScannerComponent implements OnInit {
   public tripScheduleList: Array<any> = []
 
   public parsedCityList: Array<Object | any> = [];
+  public left: Array<any> = [
+    'A','B','C','D','E','F',
+    'G','H','I','J','K','L',
+    'M','N','O','P','Q','R',
+    'S','T','U','V','W','X',
+    'Y','Z'
+  ];
+  public right: Array<any> = [
+    'A','B','C','D','E','F',
+    'G','H','I','J','K','L',
+    'M','N','O','P','Q','R',
+    'S','T','U','V','W','X',
+    'Y','Z'
+  ];
+  public back: Array<any> = [
+    'B1','B2','B3','B4','B5','B6'
+  ];
+
 
   constructor(
     private cd: ChangeDetectorRef,
     public snackBarService: MatSnackBar,
     private passSakayAPIService: PassSakayCollectionService,
-    private busAccount: BusDriverComponent
+    private busAccount: BusDriverComponent,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -49,9 +69,17 @@ export class QrScannerComponent implements OnInit {
     // this.stopScaning();
   }
 
+  openScrollableContent(longContent: any) {
+		this.modalService.open(longContent, { scrollable: true });
+	}
+
   initTripDetailsFormGroup = () => {
     this.tripDetailsFormGroup = new FormGroup({
       tripAction: new FormControl('', Validators.required),
+      temperature: new FormControl('', Validators.required),
+      tripPlaceOfScan: new FormControl('', Validators.required),
+      seatNumber: new FormControl('', Validators.required),
+      landmark: new FormControl(''),
       tripSched: new FormControl('', Validators.required),
     });
 
@@ -86,6 +114,10 @@ export class QrScannerComponent implements OnInit {
       // TODO: add to payload - passenger ID, bus driver ID
       const tripType = this.tripDetailsFormGroup.get('tripAction');
       const tripSched = this.tripDetailsFormGroup.get('tripSched');
+      const temperature = this.tripDetailsFormGroup.get('temperature');
+      const seatNumber = this.tripDetailsFormGroup.get('seatNumber');
+      const landmark = this.tripDetailsFormGroup.get('landmark');
+      const tripPlaceOfScan = this.tripDetailsFormGroup.get('tripPlaceOfScan');
       const busAccount = this.busAccount.userData._userId;
 
       let body: Object = {
@@ -93,6 +125,10 @@ export class QrScannerComponent implements OnInit {
         tripType: tripType?.value || null,
         busAccount: busAccount || null,
         tripSched: tripSched?.value || null,
+        temperature: temperature?.value || null,
+        landmark: landmark?.value || null,
+        seatNumber: seatNumber?.value || null,
+        tripPlaceOfScan: tripPlaceOfScan?.value || null,
         date: Date.now(),
         time: Date.now(),
       };
@@ -193,7 +229,7 @@ export class QrScannerComponent implements OnInit {
     let isInputNull: number = 0;
     Object.keys(this.tripDetailsFormGroup.controls).forEach((key: any) => {
       const controlValue = this.tripDetailsFormGroup.controls[key].value;
-      if (!controlValue) {
+      if (!controlValue && key !== "landmark") {
         isInputNull++;
       }
     });

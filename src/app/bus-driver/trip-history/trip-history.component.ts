@@ -17,6 +17,7 @@ export class TripHistoryComponent implements OnInit {
   public breakpoint: number = 0;
 
   public tripHistoryList: Array<any> = [];
+  public scanType: String = "All";
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -31,6 +32,16 @@ export class TripHistoryComponent implements OnInit {
   }
 
   // /scanned-qr/trip-history/:passenger_id
+
+  filterTripHistory = (): any => {
+    if (this.scanType === "scan-in") {
+      return this.tripHistoryList.filter((trip: any) => trip.scanType === this.scanType);
+    } else if (this.scanType === "scan-out") {
+      return this.tripHistoryList.filter((trip: any) => trip.scanType === this.scanType);
+    } else {
+      return this.tripHistoryList;
+    }
+  }
 
   getAllTripHistory = () => {
     console.log(this.busDriverData.userData);

@@ -15,6 +15,14 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
+interface IReportBody {
+  busAccount: string,
+  passengerAccount: string,
+  dateFrom: Date,
+  dateTo: Date,
+  today: Date,
+}
+
 @Component({
   selector: 'app-bus-driver-reports',
   templateUrl: './reports.component.html',
@@ -32,6 +40,13 @@ export class ReportsComponent implements OnInit {
   public tripHistoryList: Array<any> = [];
   public generateReportForm!: FormGroup;
 
+  public toggleDatePicker: Boolean = true;
+  public minDate: any;
+  public maxDate: any;
+
+  public pdfBody: Array<any> = [];
+  public pdfHeaders: Array<any> = [];
+
   constructor(
     private localStorageService: LocalStorageService,
     private route: Router,
@@ -47,6 +62,8 @@ export class ReportsComponent implements OnInit {
   initGenerateReportForm = () => {
     this.generateReportForm = new FormGroup({
       busAccount: new FormControl('', Validators.required),
+      passengerAccount: new FormControl('', Validators.required),
+      scanType: new FormControl('', Validators.required),
       dateFrom: new FormControl('', Validators.required),
       dateTo: new FormControl('', Validators.required),
       today: new FormControl('', Validators.required),
@@ -93,6 +110,46 @@ export class ReportsComponent implements OnInit {
       });
   };
 
+  onChangeJustToday = () => {
+    const today = this.generateReportForm.get('today');
+    const dateFrom = this.generateReportForm.get('dateFrom');
+    const dateTo = this.generateReportForm.get('dateTo');
+    console.log(today?.value);
+
+    if (today?.value) {
+      dateFrom?.disable();
+      dateFrom?.setValue('');
+      dateTo?.disable();
+      dateTo?.setValue('');
+      this.toggleDatePicker = false;
+    } else {
+      dateFrom?.enable();
+      dateTo?.enable();
+      this.toggleDatePicker = true;
+    }
+  };
+
+  setDateObject = (date: any): any => {
+    const dateObj = new Date(date);
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
+    const year = dateObj.getFullYear();
+    const parsedDate = new NgbDate(year, month, day);
+    return parsedDate;
+  };
+
+  setMaxDate = () => {
+    const dateTo = this.generateReportForm.get('dateTo');
+    this.maxDate = this.setDateObject(dateTo?.value);
+    console.log('setMax', this.setDateObject(dateTo?.value));
+  };
+
+  setMinDate = () => {
+    const dateFrom = this.generateReportForm.get('dateFrom');
+    this.minDate = this.setDateObject(dateFrom?.value);
+    console.log('setMin', this.setDateObject(dateFrom?.value));
+  };
+
   // export to PDF
 
   //excel button click functionality
@@ -119,31 +176,46 @@ export class ReportsComponent implements OnInit {
   //   });
   // }
 
-  save = (): void => {
-    console.log('sdafahdsfka');
-    let content = this.content.nativeElement;
-    let doc: any = new jsPDF('p', 'mm', 'a4');
-    let _elementHandlers = {
-      '#editor': function (element: any, renderer: any) {
-        return true;
-      },
-    };
-    doc.html(content.innerHTML, {
-      x: 15,
-      y: 15,
-      width: 190,
-      elementHandlers: _elementHandlers,
-    });
+  getFormValues = (): IReportBody => {
+    const busAccount = this.generateReportForm.get('busAccount');
+    const passengerAccount = this.generateReportForm.get('passengerAccount');
+    const dateFrom = this.generateReportForm.get('dateFrom');
+    const dateTo = this.generateReportForm.get('dateTo');
+    const today = this.generateReportForm.get('today');
 
-    doc.save('test.pdf');
+    const payload: any = {};
+    Object.keys(this.generateReportForm.controls).forEach(key => {
+      if (this.generateReportForm.controls[key].value) {
+        payload[key] = this.generateReportForm.controls[key].value;
+      }
+    });
+    console.log(payload);
+    return payload;
   };
 
-  generateHeaderFooterTable = () => {
-    const fileTitle = ``;
+  // save = (): void => {
+  //   let content = this.content.nativeElement;
+  //   let doc: any = new jsPDF('p', 'mm', 'a4');
+  //   let _elementHandlers = {
+  //     '#editor': function (element: any, renderer: any) {
+  //       return true;
+  //     },
+  //   };
+  //   doc.html(content.innerHTML, {
+  //     x: 15,
+  //     y: 15,
+  //     width: 190,
+  //     elementHandlers: _elementHandlers,
+  //   });
+
+  //   doc.save('test.pdf');
+  // };
+
+  generatePDFReport = (data: any, fileName: string) => {
     const doc = new jsPDF('p', 'pt', 'letter');
     let y = 10;
     doc.setLineWidth(2);
-    doc.text('Product detailed report', 200, (y = y + 30));
+    doc.text('Trip Report - ' + moment().format("MMMDDYYYY"), 200, (y = y + 30));
     autoTable(doc, {
       columnStyles: { price: { halign: 'right' } },
       body: [
@@ -161,7 +233,6 @@ export class ReportsComponent implements OnInit {
         { header: 'Price', dataKey: 'price' },
       ],
       startY: 70,
-      head: [['SL.No', 'Product Name', 'Price', 'Model']],
       foot: [[' ', 'Price total', '130000', '  ']],
       headStyles: { textColor: [255, 255, 255] },
       footStyles: { textColor: [255, 255, 255] },
@@ -169,6 +240,50 @@ export class ReportsComponent implements OnInit {
     });
     // save the data to this file
     doc.save('');
+  };
+
+  apiGenerateReportData = () => {
+    const body = this.getFormValues();
+    this.passSakayAPIService.getAllTripHistoryReport(body)
+      .then(data => {
+        data.forEach((tripHistory: any, idx: number) => {
+          const passenger = tripHistory.passengerAccount;
+          const fullname = `
+            ${passenger.lastname}, 
+            ${passenger.firstname} 
+            ${passenger.middlename ? passenger.middlename : ""}
+          `;
+
+          const tripSched = tripHistory.tripSched;
+          const tripSchedRoutine = tripSched.daysRoutine.map((day: any) => day[0]).join('');
+          const tripSchedRoute = `${tripSched.startingPoint} - ${tripSched.finishingPoint}`;
+          const tripSchedTime = `${tripSched.startTime} - ${tripSched.endTime}`;
+          const tripSchedData = `${tripSched.name} (
+            ${tripSchedRoutine} | 
+            ${tripSchedRoute} | 
+            ${tripSchedTime}
+          )`;
+
+          this.pdfBody.push({
+            id: idx + 1,
+            passengerName: fullname,
+            busName: `${tripHistory.busAccount.busName}`,
+            tripSched: tripSchedData,
+            date: moment(tripHistory.date).format('MMM DD YYYY'),
+            time: moment(tripHistory.time).format('HH:mm:ss A'),
+          });
+        });
+        this.generatePDFReport(this.pdfBody, "trip-report-" + moment().format("MMMDDYYYY"));
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  generateHeaderFooterTable = () => {
+    const fileTitle = ``;
+    console.log(this.generateReportForm);
+    // this.generatePDFReport();
   };
 
   ngDoCheck(): void {}

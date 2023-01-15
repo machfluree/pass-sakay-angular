@@ -18,6 +18,18 @@
       >
       <a
         class="list-group-item list-group-item-action list-group-item-light p-3"
+        [routerLink]="['/admin/contact-tracing']"
+        routerLinkActive="active"
+        >Contact Tracing</a
+      >
+      <a
+        class="list-group-item list-group-item-action list-group-item-light p-3"
+        [routerLink]="['/admin/trip-history']"
+        routerLinkActive="active"
+        >Trip History</a
+      >
+      <a
+        class="list-group-item list-group-item-action list-group-item-light p-3"
         [routerLink]="['/admin/passengers']"
         routerLinkActive="active"
         >Passenger</a
@@ -33,12 +45,6 @@
         [routerLink]="['/admin/trip-schedules']"
         routerLinkActive="active"
         >Trip Schedules</a
-      >
-      <a
-        class="list-group-item list-group-item-action list-group-item-light p-3"
-        [routerLink]="['/admin/trip-history']"
-        routerLinkActive="active"
-        >Trip History</a
       >
       <a
         class="list-group-item list-group-item-action list-group-item-light p-3"

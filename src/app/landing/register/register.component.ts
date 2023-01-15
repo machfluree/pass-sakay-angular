@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/services/local-storage.service';
 import { PassSakayCollectionService } from 'src/services/pass-sakay-api.service';
 import html2canvas from 'html2canvas';
+import { cityList } from 'src/constants/ph-citymun-list';
 
 @Component({
   selector: 'app-register',
@@ -17,32 +18,46 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private snackBarService: MatSnackBar,
     private passSakayAPIService: PassSakayCollectionService,
-  ) {}
+    ) {}
+    
+    @ViewChild('screen') screen!: ElementRef;
+    @ViewChild('canvas') canvas!: ElementRef;
+    @ViewChild('downloadLink') downloadLink!: ElementRef;
+    
+    public category: string = '';
+    public passengerStepControls: string = '';
+    public busdriverStepControls: string = '';
+    public qrPassengerData: any;
+    public qrData: string = "";
+    public passengerFormGroup: FormGroup = new FormGroup({});
+    public busDriverFormGroup: FormGroup = new FormGroup({});
+    public disableBasicInfoNext: Boolean = true;
+    public disableContactInfoNext: Boolean = true;
+    public disableSuccessRegister: Boolean = true;
+    public disableBusBasicInfoNext: Boolean = true;
+    public disableBusOperatorInfoNext: Boolean = true;
+    public disableBusOperatorScanOptNext: Boolean = true;
+    public disableBusAccountInfoNext: Boolean = true;
+    public busDriverSuccessRegister: Boolean = false;
+    
+    private newBusDriver: any;
+    public parsedCityList: any;
+    
+    ngOnInit(): void {
+      this.initializePassengerFormGroup();
+      this.initializeBusDriverFormGroup();
+      this.initCityList();
+    }
 
-  @ViewChild('screen') screen!: ElementRef;
-  @ViewChild('canvas') canvas!: ElementRef;
-  @ViewChild('downloadLink') downloadLink!: ElementRef;
-
-  public category: string = '';
-  public passengerStepControls: string = '';
-  public busdriverStepControls: string = '';
-  public qrPassengerData: any;
-  public qrData: string = "";
-  public passengerFormGroup: FormGroup = new FormGroup({});
-  public busDriverFormGroup: FormGroup = new FormGroup({});
-  public disableBasicInfoNext: Boolean = true;
-  public disableContactInfoNext: Boolean = true;
-  public disableSuccessRegister: Boolean = true;
-  public disableBusBasicInfoNext: Boolean = true;
-  public disableBusOperatorInfoNext: Boolean = true;
-  public disableBusAccountInfoNext: Boolean = true;
-  public busDriverSuccessRegister: Boolean = false;
-  
-  private newBusDriver: any;
-
-  ngOnInit(): void {
-    this.initializePassengerFormGroup();
-    this.initializeBusDriverFormGroup();
+  initCityList(): void {
+    const rawCityList = cityList.RECORDS.map((city) => {
+      if (city.provCode === '0133') {
+        return city;
+      }
+      return;
+    });
+    this.parsedCityList = rawCityList.filter((city) => city !== undefined);
+    console.log(this.parsedCityList);
   }
 
   initializePassengerFormGroup = () => {
@@ -53,7 +68,10 @@ export class RegisterComponent implements OnInit {
       gender: new FormControl('', Validators.required),
       birthdate: new FormControl('', Validators.required),
       contactNumber: new FormControl('', Validators.required),
-      emailAddress: new FormControl(''),
+      emailAddress: new FormControl('', [
+        Validators.required, 
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
+      ]),
       currentAddress: new FormControl('', Validators.required),
       homeAddress: new FormControl('', Validators.required),
       // Account Details
@@ -73,7 +91,12 @@ export class RegisterComponent implements OnInit {
       operatorFullName: new FormControl('', Validators.required),
       operatorPosition: new FormControl('', Validators.required),
       operatorPhoneNumber: new FormControl('', Validators.required),
-      operatorEmail: new FormControl('',),
+      operatorEmail: new FormControl('', [
+        Validators.required, 
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
+      ]),
+      acceptHighTemp: new FormControl("", Validators.required),
+      acceptNoVaccination: new FormControl("", Validators.required),
       // Account Details
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
@@ -241,6 +264,14 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  numberOnly = (event: any): boolean => {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
   gotoLoginPage = () => {
     this.router.navigate(['/welcome/login']);
   }
@@ -324,15 +355,30 @@ export class RegisterComponent implements OnInit {
       const operatorFullName = this.busDriverFormGroup.get('operatorFullName');
       const operatorPosition = this.busDriverFormGroup.get('operatorPosition');
       const operatorPhoneNumber = this.busDriverFormGroup.get('operatorPhoneNumber');
+      const operatorEmail = this.busDriverFormGroup.get('operatorEmail');
 
       if (
         (operatorFullName && operatorFullName.value !== "" && operatorFullName.value !== null) &&
         (operatorPhoneNumber && operatorPhoneNumber.value !== "" && operatorPhoneNumber.value !== null) &&
-        (operatorPosition && operatorPosition.value !== "" && operatorPosition.value !== null)
+        (operatorEmail && operatorEmail.value !== "" && operatorEmail.value !== null) 
       ) {
         this.disableBusOperatorInfoNext = false;
       } else {
         this.disableBusBasicInfoNext = true;
+      }
+    }
+
+    if (this.category === 'bus-driver' && this.busdriverStepControls === 'bus-driver-tempVac') {
+      const temp = this.busDriverFormGroup.get('acceptHighTemp');
+      const vaccine = this.busDriverFormGroup.get('acceptNoVaccination');
+
+      if (
+        (temp && temp.value !== "" && temp.value !== null) &&
+        (vaccine && vaccine.value !== "" && vaccine.value !== null)
+      ) {
+        this.disableBusOperatorScanOptNext = false;
+      } else {
+        this.disableBusOperatorScanOptNext = true;
       }
     }
 
