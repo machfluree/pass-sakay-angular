@@ -44,6 +44,8 @@ export class ReportsComponent implements OnInit {
   public minDate: any;
   public maxDate: any;
 
+  public busProfileData: any;
+
   public pdfBody: Array<any> = [];
   public pdfHeaders: Array<any> = [];
 
@@ -56,12 +58,13 @@ export class ReportsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getBusProfile();
     this.initGenerateReportForm();
   }
 
   initGenerateReportForm = () => {
     this.generateReportForm = new FormGroup({
-      busAccount: new FormControl('', Validators.required),
+      busAccount: new FormControl(this.busProfileData._id, Validators.required),
       passengerAccount: new FormControl('', Validators.required),
       scanType: new FormControl('', Validators.required),
       dateFrom: new FormControl('', Validators.required),
@@ -69,6 +72,23 @@ export class ReportsComponent implements OnInit {
       today: new FormControl('', Validators.required),
     });
   };
+
+  getBusProfile = () => {
+    this.passSakayAPIService
+      .getOneBusAccountData(this.busDriverData.userData._userId)
+      .then((response: any) => {
+        if (response.error) {
+          console.log(response);
+        }
+        if (!response.error) {
+          this.busProfileData = response;
+          console.log(this.busProfileData)
+        }
+      })
+      .catch((err: any) => {
+        console.log('add passenger error', err);
+      });
+  }
 
   getAllTripHistory = (payload: any) => {
     console.log(this.busDriverData.userData);

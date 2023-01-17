@@ -19,10 +19,7 @@
           <div class="form-group">
             <label>Bus Name</label>
             <select name="" id="" class="form-control form-select disabled" formControlName="busAccount">
-              <option selected value="">Bus Name 1</option>
-              <option value="">Bus Name 2</option>
-              <option value="">Bus Name 3</option>
-              <option value="">Bus Name 4</option>
+              <option selected [value]="busProfileData._id">{{ busProfileData.busName }}</option>
             </select>
             <!-- <small id="lastnameHelp" class="form-text text-muted">
                 We'll never share your email with anyone else.

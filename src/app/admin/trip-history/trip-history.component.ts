@@ -18,6 +18,9 @@ export class TripHistoryComponent implements OnInit {
   public breakpoint: number = 0;
 
   public tripHistoryList: Array<any> = [];
+  public filteredTripHistoryList: Array<any> = [];
+  public scanType: string = "";
+  public filterMode: boolean = false;
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -29,13 +32,26 @@ export class TripHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.getAllTripHistory();
-    
   }
 
-  // /scanned-qr/trip-history/:passenger_id
+  handleFilterTripHistory = (scanType: string) => {
+    this.filteredTripHistoryList = this.tripHistoryList;
+    this.scanType = scanType;
+    this.filterMode = true;
+    this.filterTripHistory(scanType);
+  }
+
+  filterTripHistory = (scanType: string): any => {
+    if (scanType == "scan-in" || scanType == "scan-out") {
+      this.filteredTripHistoryList = 
+        this.filteredTripHistoryList.filter((trip: any) => trip.ScanType === scanType);
+    }
+    console.log(this.filteredTripHistoryList);
+    return this.filteredTripHistoryList
+  }
 
   getAllTripHistory = () => {
-    console.log(this.adminData.userData);
+    // console.log(this.adminData.userData);
     this.passSakayAPIService
       .getAllTripHistoryData()
       .then((data: any) => {
