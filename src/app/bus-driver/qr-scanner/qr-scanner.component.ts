@@ -111,7 +111,6 @@ export class QrScannerComponent implements OnInit {
       this.openSnackBar('Invalid QR Code.', 'Got it');
       this.cd.markForCheck();
     } else {
-      // TODO: add to payload - passenger ID, bus driver ID
       const tripType = this.tripDetailsFormGroup.get('tripAction');
       const tripSched = this.tripDetailsFormGroup.get('tripSched');
       const temperature = this.tripDetailsFormGroup.get('temperature');

@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
     switch (userData.userRole) {
       case environment.USER_ROLE.BusDriver:
         this.route.navigate(['/bus-driver']).then(() => {
-          this.openSnackBar("Logged in as Bus Driver", "OK");
+          this.openSnackBar("Logged in as Bus Conductor", "OK");
         });
         break;
       case environment.USER_ROLE.Passenger:
